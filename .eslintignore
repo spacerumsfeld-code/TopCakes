@@ -1,0 +1,56 @@
+# dependencies
+
+node_modules
+
+# sst
+
+.sst
+.build
+
+# opennext
+
+.open-next
+
+# misc
+
+.DS_Store
+
+# local env files
+
+.env\*.local
+
+# nx
+
+.nx
+
+# local notes
+
+scratchpad.md
+
+# testing
+
+/coverage
+
+# next.js
+
+.next/
+/out/
+
+# production
+
+/build
+
+# misc
+
+.DS_Store
+\*.pem
+
+# vercel
+
+.vercel
+
+# typescript
+
+\*.tsbuildinfo
+next-env.d.ts
+sst-env.d.ts

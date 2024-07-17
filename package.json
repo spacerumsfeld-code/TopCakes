@@ -3,24 +3,35 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
     "build": "next build",
+    "dev": "sst dev next dev",
+    "lint": "next lint",
     "start": "next start",
-    "lint": "next lint"
+    "db": "drizzle-kit",
+    "db:studio": "drizzle-kit studio",
+    "preinstall": "npx only-allow pnpm"
   },
   "dependencies": {
+    "@hono/zod-validator": "^0.2.2",
+    "drizzle-kit": "^0.23.0",
+    "drizzle-orm": "^0.32.0",
+    "hono": "^4.5.0",
+    "next": "14.2.5",
+    "postgres": "^3.4.4",
+    "prettier": "^3.3.3",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.2.5"
+    "sst": "ion",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
-    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.5",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.5"
+    "typescript": "^5"
   }
 }

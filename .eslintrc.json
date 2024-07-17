@@ -1,3 +1,30 @@
 {
-  "extends": "next/core-web-vitals"
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": 12,
+        "sourceType": "module"
+    },
+    "plugins": ["@typescript-eslint"],
+    "extends": [
+        "next/core-web-vitals",
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "prettier"
+    ],
+    "rules": {
+        "@typescript-eslint/no-unused-vars": 0,
+        "@typescript-eslint/ban-ts-comment": 1,
+        "@typescript-eslint/no-explicit-any": 0,
+        "no-case-declarations": 0,
+        "no-useless-catch": 0,
+        "no-fallthrough": 0,
+        "eqeqeq": 2,
+        "no-var": 2,
+        "prefer-const": 2
+    },
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "ignorePatterns": ["**/*.js"]
 }

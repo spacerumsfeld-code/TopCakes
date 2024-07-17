@@ -1,6 +1,10 @@
 import Image from "next/image";
+import { client } from "@/clients";
 
-export default function Home() {
+export default async function Home() {
+  const greeting = await client.greeting.$get({ query: { name: 'world' } })
+  console.info('full stack  type safety baby', await greeting.json())
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
