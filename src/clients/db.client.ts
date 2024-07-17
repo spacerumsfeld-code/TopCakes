@@ -4,4 +4,4 @@ import { Resource } from 'sst'
 
 const client = postgres(Resource.DatabaseUrl.value, { prepare: false })
 
-export const db = drizzle(client)
+export const dbClient = drizzle(client)

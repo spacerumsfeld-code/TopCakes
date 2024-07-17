@@ -22,7 +22,7 @@ export default $config({
         })
 
         new sst.aws.Nextjs('Web', {
-            link: [bucket, hono],
+            link: [bucket, hono, DatabaseUrl],
         })
     },
 })
