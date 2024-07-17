@@ -36,4 +36,4 @@ pre-commit-check:
 
 # Mock Data
 seed:
-	DATABASE_URL=postgresql://postgres.rwqayzdxzxfexixhuhhs:tMe0RubyBfv6uHO7@aws-0-us-east-1.pooler.supabase.com:5432/postgres npx ts-node ./ops/seed.ts
+	DATABASE_URL=postgresql://postgres.rwqayzdxzxfexixhuhhs:[password]@aws-0-us-east-1.pooler.supabase.com:5432/postgres npx ts-node ./ops/seed.ts
