@@ -24,5 +24,9 @@ export default $config({
         new sst.aws.Nextjs('Web', {
             link: [bucket, hono, DatabaseUrl],
         })
+
+        return {
+            serverUrl: hono.url,
+        }
     },
 })
