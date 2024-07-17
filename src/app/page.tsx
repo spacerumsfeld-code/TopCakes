@@ -1,16 +1,10 @@
 import Image from "next/image";
-import { eq } from 'drizzle-orm';
-import { fetchClient, dbClient } from "@/clients";
-import { users } from '@/domain/models/index';
+import { api } from "@/clients";
 
 export default async function Home() {
-  const greeting = await fetchClient.greeting.$get({ query: { name: 'world' } })
-  console.info('full stack  type safety baby', await greeting.json());
+  const user = await api.user.$get()
+  console.info('fawk yeah brah', await user.json());
 
-  const userBro = await dbClient.select().from(users).where(eq(users.id, 1));
-  console.info('userBro', userBro);
-  
-  
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
