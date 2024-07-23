@@ -1,9 +1,9 @@
-import { pgTable, integer } from 'drizzle-orm/pg-core'
+import { pgTable, integer, serial } from 'drizzle-orm/pg-core'
 import { cakes, cakesToBattles } from '.'
 import { relations } from 'drizzle-orm'
 
 export const battles = pgTable('battles', {
-    id: integer('id').primaryKey(),
+    id: serial('id').primaryKey(),
     cake1_id: integer('cake1_id')
         .notNull()
         .references(() => cakes.id),

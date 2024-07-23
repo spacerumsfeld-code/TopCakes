@@ -3,13 +3,7 @@ import { Spotlight } from '@/app/_components/Spotlight'
 import { FlipWords } from '@/ui/FlipWord'
 
 export function Hero() {
-    const words = [
-        'delicious',
-        'scrumptious',
-        'perfect',
-        'scrumptious',
-        'wonderful',
-    ]
+    const words = ['delicious', 'scrumptious', 'perfect', 'wonderful']
 
     return (
         <>

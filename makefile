@@ -8,8 +8,8 @@ dev:
 lint:
 	npm run lint
 
-lint-fix:
-	npm run lint --fix
+typecheck:
+	tsc emit
 
 build:
 	npm run build
