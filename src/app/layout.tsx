@@ -1,5 +1,5 @@
 import { Fredoka } from 'next/font/google'
-import { Navbar } from './_components/Navbar'
+import { Navbar } from './_components/navbar/Navbar'
 import './globals.css'
 
 const inter = Fredoka({ weight: ['400'], subsets: ['latin'] })
