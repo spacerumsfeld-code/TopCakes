@@ -16,9 +16,15 @@ export interface Cake {
     vector: number[]
 }
 
-export const CakeCard = ({ cake }: { cake: Cake }) => {
+export const CakeCard = ({
+    cake,
+    opposingCakeId,
+}: {
+    cake: Cake
+    opposingCakeId: number
+}) => {
     return (
-        <SummaryModal cake={cake}>
+        <SummaryModal cake={cake} opposingCakeId={opposingCakeId}>
             <CardContainer className="inter-var">
                 <CardBody className="relative group/card hover:shadow-2xl  hover:shadow-emerald-500/[0.1] bg-black border-white/[0.2] w-auto sm:w-[30rem] h-auto rounded-xl p-6 border">
                     <CardItem
@@ -44,15 +50,13 @@ export const CakeCard = ({ cake }: { cake: Cake }) => {
                         />
                     </CardItem>
                     <div className="flex justify-between items-center mt-20">
-                        <SummaryModal cake={cake}>
-                            <CardItem
-                                translateZ={20}
-                                as="button"
-                                className="px-4 py-2 rounded-xl bg-white text-black text-xs font-bold"
-                            >
-                                Vote
-                            </CardItem>
-                        </SummaryModal>
+                        <CardItem
+                            translateZ={20}
+                            as="button"
+                            className="px-4 py-2 rounded-xl bg-white text-black text-xs font-bold"
+                        >
+                            Vote
+                        </CardItem>
                     </div>
                 </CardBody>
             </CardContainer>

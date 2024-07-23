@@ -3,55 +3,125 @@ import { handle } from 'hono/aws-lambda'
 import { prettyJSON } from 'hono/pretty-json'
 import { logger } from 'hono/logger'
 import { db } from '@/clients/db.client'
-import { users, cakes, battles } from '@/models'
+import { users, cakes, battles, cakesToBattles } from '@/models'
 import { eq } from 'drizzle-orm'
 import { sql } from 'drizzle-orm'
 import { z } from 'zod'
 import { zValidator } from '@hono/zod-validator'
 
 const ZPostBattle = z.object({
-    cake1Id: z.number().int().min(1).max(100),
-    cake2Id: z.number().int().min(1).max(100),
-    winnerId: z.number().int().min(1).max(100),
+    cake1Id: z.number().int(),
+    cake2Id: z.number().int(),
+    winnerId: z.number().int(),
 })
 
 const app = new Hono()
     // Users
     .get('/user', async (c) => {
-        const userBro = await db.select().from(users).where(eq(users.id, 1))
+        try {
+            const userBro = await db.select().from(users).where(eq(users.id, 1))
 
-        return c.json({
-            userBro,
-        })
+            return c.json({
+                data: {
+                    userBro,
+                },
+                error: null,
+            })
+        } catch (error) {
+            return c.json({
+                data: null,
+                error: (error as Error).cause,
+            })
+        }
     })
 
     // Cakes
     .get('/cakes/battle', async (c) => {
-        const battleCakes = await db
-            .select()
-            .from(cakes)
-            .orderBy(sql`random()`)
-            .limit(2)
+        try {
+            const battleCakes = await db
+                .select()
+                .from(cakes)
+                .orderBy(sql`random()`)
+                .limit(2)
 
-        return c.json({
-            battleCakes,
-        })
+            return c.json({
+                data: battleCakes,
+                error: null,
+            })
+        } catch (error) {
+            return c.json({
+                data: null,
+                error: (error as Error).cause,
+            })
+        }
     })
 
     // Battles
-    .post('/battle', zValidator('json', ZPostBattle), async (c) => {
-        const { cake1Id, cake2Id, winnerId } = c.req.valid('json')
+    .post(
+        '/battle',
+        zValidator('json', ZPostBattle, (result, c) => {
+            if (!result.success) {
+                console.error(result)
+                return c.json({
+                    error: {
+                        message: `Validation error`,
+                    },
+                    data: null,
+                })
+            }
+        }),
+        async (c) => {
+            try {
+                const { cake1Id, cake2Id, winnerId } = c.req.valid('json')
 
-        const battle = await db.insert(battles).values({
-            cake1_id: cake1Id,
-            cake2_id: cake2Id,
-            winner_id: winnerId,
-        })
+                // Create battle
+                const newBattle = await db
+                    .insert(battles)
+                    .values({
+                        cake1Id,
+                        cake2Id,
+                        winnerId,
+                    })
+                    .returning({ id: battles.id })
 
-        return c.json({
-            battle,
-        })
-    })
+                // Cleanup tasks
+                await db
+                    .update(cakes)
+                    .set({
+                        wins: sql`wins + 1`,
+                    })
+                    .where(eq(cakes.id, cake1Id))
+                await db
+                    .update(cakes)
+                    .set({
+                        losses: sql`losses + 1`,
+                    })
+                    .where(eq(cakes.id, cake2Id))
+                await db.insert(cakesToBattles).values({
+                    cakeId: cake1Id,
+                    battleId: newBattle[0].id,
+                })
+                await db.insert(cakesToBattles).values({
+                    cakeId: cake2Id,
+                    battleId: newBattle[0].id,
+                })
+
+                return c.json({
+                    data: {
+                        success: true,
+                    },
+                    error: null,
+                })
+            } catch (error) {
+                return c.json({
+                    data: null,
+                    error: {
+                        message: (error as Error).message,
+                    },
+                })
+            }
+        },
+    )
 
 app.use(prettyJSON())
 app.use(logger())

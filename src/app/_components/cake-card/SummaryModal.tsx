@@ -11,20 +11,29 @@ import {
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Cake } from './CakeCard'
+import { submitVote } from './_action'
 
 export function SummaryModal({
     children,
     cake,
+    opposingCakeId,
 }: {
     children: React.ReactNode
     cake: Cake
+    opposingCakeId: number
 }) {
+    // Interactivity
+    const handleSubmitVote = async () => {
+        await submitVote({ cakeId: cake.id, opposingCakeId })
+    }
+
+    // Render
     return (
         <Modal>
             <ModalTrigger className="group/modal-btn">{children}</ModalTrigger>
             <ModalBody>
-                <ModalContent>
-                    <h4 className="text-lg md:text-2xl  text-neutral-100 font-bold text-center mb-8">
+                <ModalContent className="flex flex-col gap-y-8">
+                    <h4 className="text-lg md:text-2xl  text-gray-900 font-bold text-center mb-8">
                         {cake.name}
                     </h4>
                     <div className="flex justify-center items-center">
@@ -42,7 +51,7 @@ export function SummaryModal({
                                 rotate: 0,
                                 zIndex: 100,
                             }}
-                            className="rounded-xl -mr-4 mt-4 p-1 bg-white dark:bg-neutral-800 dark:border-neutral-700 border border-neutral-100 flex-shrink-0 overflow-hidden"
+                            className="rounded-xl -mr-4 mt-4 p-1 bg-[#FFB6C1] border flex-shrink-0 overflow-hidden"
                         >
                             <Image
                                 src={cake.image_url}
@@ -53,25 +62,23 @@ export function SummaryModal({
                             />
                         </motion.div>
                     </div>
-                    <div>Ingredients</div>
-                    <div className="py-10 flex flex-wrap gap-x-4 gap-y-6 items-start justify-start max-w-sm mx-auto">
+                    <div className="text-gray-900">Ingredients</div>
+                    <div className=" grid grid-cols-3 gap-x-4 gap-y-4 items-start justify-start max-w-sm">
                         {cake.ingredients.map((ingredient) => (
-                            <div
-                                key={ingredient}
-                                className="flex  items-center justify-center"
-                            >
-                                <span className=" text-neutral-300 text-sm">
+                            <div key={ingredient}>
+                                <span className=" text-gray-900 text-sm">
                                     {ingredient}
                                 </span>
                             </div>
                         ))}
                     </div>
+                    <div className="text-gray-900">Recipe</div>
                 </ModalContent>
                 <ModalFooter className="gap-4">
-                    <button className="px-2 py-1   bg-black dark:border-black text-white border border-gray-300 rounded-md text-sm w-28">
-                        Cancel
-                    </button>
-                    <button className="bg-black text-white dark:bg-white dark:text-black text-sm px-2 py-1 rounded-md border border-black w-28">
+                    <button
+                        onClick={() => handleSubmitVote()}
+                        className="bg-black text-white text-sm px-2 py-1 rounded-md border border-black w-28"
+                    >
                         Vote Now
                     </button>
                 </ModalFooter>
