@@ -21,11 +21,12 @@ export default $config({
             url: true,
         })
 
-        new sst.aws.Nextjs('Web', {
-            link: [bucket, hono, DatabaseUrl],
+        const web = new sst.aws.Nextjs('Web', {
+            link: [bucket, hono],
         })
 
         return {
+            webUrl: web.url,
             serverUrl: hono.url,
         }
     },

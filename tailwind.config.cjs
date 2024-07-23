@@ -15,6 +15,7 @@ module.exports = {
       {
         animation: {
             spotlight: "spotlight 2s ease .75s 1 forwards",
+            defeated: 'defeated 3s ease-in-out',
           },
           keyframes: {
             spotlight: {
@@ -27,6 +28,11 @@ module.exports = {
                 transform: "translate(-50%,-40%) scale(1)",
               },
             },
+            defeated: {
+              '0%': { opacity: '1', transform: 'translateX(0)' },
+              '100%': { opacity: '0', transform: 'translateX(-100%)' },
+            },
+
           }
         },
   },

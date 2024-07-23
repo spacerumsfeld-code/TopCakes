@@ -4,10 +4,14 @@ import { prettyJSON } from 'hono/pretty-json'
 import { logger } from 'hono/logger'
 import { db } from '@/clients/db.client'
 import { users, cakes, battles, cakesToBattles } from '@/models'
-import { eq } from 'drizzle-orm'
+import { eq, not } from 'drizzle-orm'
 import { sql } from 'drizzle-orm'
 import { z } from 'zod'
 import { zValidator } from '@hono/zod-validator'
+
+const ZGetRandomCake = z.object({
+    cakeId: z.string(),
+})
 
 const ZPostBattle = z.object({
     cake1Id: z.number().int(),
@@ -36,6 +40,43 @@ const app = new Hono()
     })
 
     // Cakes
+    .get(
+        '/cakes/random',
+        zValidator('query', ZGetRandomCake, (result, c) => {
+            if (!result.success) {
+                console.error(result)
+
+                return c.json({
+                    error: {
+                        message: `Validation error`,
+                    },
+                    data: null,
+                })
+            }
+        }),
+        async (c) => {
+            try {
+                const { cakeId } = c.req.valid('query')
+
+                const battleCake = await db
+                    .select()
+                    .from(cakes)
+                    .orderBy(sql`random()`)
+                    .limit(1)
+                    .where(not(eq(cakes.id, Number(cakeId))))
+
+                return c.json({
+                    data: battleCake[0],
+                    error: null,
+                })
+            } catch (error) {
+                return c.json({
+                    data: null,
+                    error: (error as Error).cause,
+                })
+            }
+        },
+    )
     .get('/cakes/battle', async (c) => {
         try {
             const battleCakes = await db

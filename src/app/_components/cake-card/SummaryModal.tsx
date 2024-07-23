@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 import {
     Modal,
     ModalBody,
@@ -16,15 +16,39 @@ import { submitVote } from './_action'
 export function SummaryModal({
     children,
     cake,
+    cakeIdx,
     opposingCakeId,
+    setCakes,
 }: {
     children: React.ReactNode
     cake: Cake
+    cakeIdx: number
     opposingCakeId: number
+    setCakes: Dispatch<SetStateAction<Cake[]>>
 }) {
     // Interactivity
     const handleSubmitVote = async () => {
-        await submitVote({ cakeId: cake.id, opposingCakeId })
+        const defeatedCake = document.getElementById(`cake-${opposingCakeId}`)
+        if (defeatedCake) {
+            defeatedCake.classList.add('animate-defeated')
+        }
+
+        // add animation to victorious cake
+
+        const { newBattleCake } = await submitVote({
+            cakeId: cake.id,
+            opposingCakeId,
+        })
+
+        setCakes((prevCakes: Cake[]) => {
+            const newCakes = [...prevCakes]
+            const newCakeIdx = newCakes.findIndex(
+                (c: Cake) => c.id === opposingCakeId,
+            )
+            newCakes[newCakeIdx] = newBattleCake
+            newCakes[cakeIdx] = cake
+            return newCakes
+        })
     }
 
     // Render
@@ -74,14 +98,13 @@ export function SummaryModal({
                     </div>
                     <div className="text-gray-900">Recipe</div>
                 </ModalContent>
-                <ModalFooter className="gap-4">
-                    <button
-                        onClick={() => handleSubmitVote()}
-                        className="bg-black text-white text-sm px-2 py-1 rounded-md border border-black w-28"
-                    >
-                        Vote Now
-                    </button>
-                </ModalFooter>
+                <ModalFooter
+                    submitConfig={{
+                        label: 'Vote Now',
+                        action: handleSubmitVote,
+                    }}
+                    className="gap-4"
+                ></ModalFooter>
             </ModalBody>
         </Modal>
     )

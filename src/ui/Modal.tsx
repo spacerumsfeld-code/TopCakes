@@ -154,11 +154,14 @@ export const ModalContent = ({
 }
 
 export const ModalFooter = ({
-    children,
     className,
+    submitConfig,
 }: {
-    children: ReactNode
     className?: string
+    submitConfig?: {
+        label: string
+        action: () => Promise<void>
+    }
 }) => {
     return (
         <div
@@ -167,8 +170,37 @@ export const ModalFooter = ({
                 className,
             )}
         >
-            {children}
+            {submitConfig && (
+                <ModalSubmitButton
+                    label={submitConfig.label}
+                    action={submitConfig.action}
+                />
+            )}
         </div>
+    )
+}
+
+const ModalSubmitButton = ({
+    label,
+    action,
+}: {
+    label: string
+    action: () => Promise<void>
+}) => {
+    const { setOpen } = useModal()
+
+    const handleSubmit = async () => {
+        setOpen(false)
+        await action()
+    }
+
+    return (
+        <button
+            onClick={() => handleSubmit()}
+            className="bg-black text-white text-sm px-2 py-1 rounded-md border border-black w-28"
+        >
+            {label}
+        </button>
     )
 }
 

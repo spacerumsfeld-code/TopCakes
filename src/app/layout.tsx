@@ -1,8 +1,8 @@
-import { Inter } from 'next/font/google'
+import { Fredoka } from 'next/font/google'
 import { Navbar } from './_components/Navbar'
 import './globals.css'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Fredoka({ weight: ['400'], subsets: ['latin'] })
 
 export default function RootLayout({
     children,

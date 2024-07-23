@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import React from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 import { CardBody, CardContainer, CardItem } from '@/ui/3DCard'
 import { SummaryModal } from './SummaryModal'
 
@@ -18,15 +18,28 @@ export interface Cake {
 
 export const CakeCard = ({
     cake,
+    cakeIdx,
     opposingCakeId,
+    setCakes,
 }: {
     cake: Cake
+    cakeIdx: number
     opposingCakeId: number
+    setCakes: Dispatch<SetStateAction<Cake[]>>
 }) => {
     return (
-        <SummaryModal cake={cake} opposingCakeId={opposingCakeId}>
+        <SummaryModal
+            cake={cake}
+            cakeIdx={cakeIdx}
+            opposingCakeId={opposingCakeId}
+            setCakes={setCakes}
+        >
             <CardContainer className="inter-var">
-                <CardBody className="relative group/card hover:shadow-2xl  hover:shadow-emerald-500/[0.1] bg-black border-white/[0.2] w-auto sm:w-[30rem] h-auto rounded-xl p-6 border">
+                <CardBody
+                    key={cake.id}
+                    id={`cake-${cake.id}`}
+                    className="relative group/card hover:shadow-2xl  hover:shadow-emerald-500/[0.1] bg-black border-white/[0.2] w-auto sm:w-[30rem] h-auto rounded-xl p-6 border"
+                >
                     <CardItem
                         translateZ="50"
                         className="text-xl font-bold text-white"

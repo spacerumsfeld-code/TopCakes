@@ -14,10 +14,12 @@ const MouseEnterContext = createContext<
 >(undefined)
 
 export const CardContainer = ({
+    id,
     children,
     className,
     containerClassName,
 }: {
+    id?: string
     children?: React.ReactNode
     className?: string
     containerClassName?: string
@@ -47,6 +49,7 @@ export const CardContainer = ({
     return (
         <MouseEnterContext.Provider value={[isMouseEntered, setIsMouseEntered]}>
             <div
+                id={id}
                 className={cn(
                     'py-20 flex items-center justify-center',
                     containerClassName,
@@ -76,14 +79,17 @@ export const CardContainer = ({
 }
 
 export const CardBody = ({
+    id,
     children,
     className,
 }: {
+    id?: string
     children: React.ReactNode
     className?: string
 }) => {
     return (
         <div
+            id={id}
             className={cn(
                 'h-96 w-96 [transform-style:preserve-3d]  [&>*]:[transform-style:preserve-3d]',
                 className,
