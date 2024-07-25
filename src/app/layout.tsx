@@ -15,7 +15,9 @@ export default function RootLayout({
                 className={`${inter.className} bg-grid-small-white/[0.2] w-full h-full`}
             >
                 <Navbar />
-                <div className="flex flex-col py-8">{children}</div>
+                <div className="flex flex-col py-8 max-w-7xl mx-auto w-full">
+                    {children}
+                </div>
             </body>
         </html>
     )

@@ -6,7 +6,7 @@ dev:
 # QA
 
 lint:
-	npm run lint
+	npm run lint-fix
 
 typecheck:
 	tsc emit
@@ -30,7 +30,7 @@ migrate-db:
 
 # CICD
 pre-commit-check:
-	npm run lint
+	npm run lint-fix
 	npm run typecheck
 	npm run build
 

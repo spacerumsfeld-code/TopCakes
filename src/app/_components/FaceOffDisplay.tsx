@@ -11,7 +11,7 @@ export const FaceOffDisplay = ({
 
     // Render
     return (
-        <div className="flex items-center justify-center w-full max-w-7xl mx-auto gap-x-8">
+        <div className="flex items-center justify-center gap-x-8">
             <CakeCard
                 cake={cakes[0]}
                 cakeIdx={0}

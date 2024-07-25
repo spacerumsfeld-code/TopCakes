@@ -14,16 +14,6 @@ export function CenterMenu({ className }: { className?: string }) {
             )}
         >
             <Menu setActive={setActive}>
-                <MenuItem setActive={setActive} active={active} item="Bakery">
-                    <div className="backdrop-blur-md text-sm grid grid-cols-2 gap-10 p-4">
-                        <ProductItem
-                            title="Bakery"
-                            href="https://algochurn.com"
-                            src="https://assets.aceternity.com/demos/algochurn.webp"
-                            description="Submit your own cakes to compete in TopCakes"
-                        />
-                    </div>
-                </MenuItem>
                 <MenuItem
                     setActive={setActive}
                     active={active}
@@ -32,23 +22,9 @@ export function CenterMenu({ className }: { className?: string }) {
                     <div className="backdrop-blur-md text-sm grid grid-cols-2 gap-10 p-4">
                         <ProductItem
                             title="Leaderboard"
-                            href="https://algochurn.com"
+                            href={`${process.env.NEXT_PUBLIC_WEB_URL}/leaderboard`}
                             src="https://assets.aceternity.com/demos/algochurn.webp"
-                            description="The leaderboard for TopCakes"
-                        />
-                    </div>
-                </MenuItem>
-                <MenuItem
-                    setActive={setActive}
-                    active={active}
-                    item="How It Works"
-                >
-                    <div className="backdrop-blur-md text-sm grid grid-cols-2 gap-10 p-4">
-                        <ProductItem
-                            title="How It Works"
-                            href="https://algochurn.com"
-                            src="https://assets.aceternity.com/demos/algochurn.webp"
-                            description="Submit your own cakes to compete in TopCakes"
+                            description="The best cakes in the world"
                         />
                     </div>
                 </MenuItem>
