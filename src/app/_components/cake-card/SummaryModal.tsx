@@ -86,7 +86,7 @@ export function SummaryModal({
                             />
                         </motion.div>
                     </div>
-                    <div className="text-gray-900">Ingredients</div>
+                    <div className="text-neutral-900">Ingredients</div>
                     <div className=" grid grid-cols-3 gap-x-4 gap-y-4 items-start justify-start max-w-sm">
                         {cake.ingredients.map((ingredient) => (
                             <div key={ingredient}>

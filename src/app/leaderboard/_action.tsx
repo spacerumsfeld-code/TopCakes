@@ -1,7 +1,7 @@
 'use server'
 
 import { api } from '@/clients'
-import { getLeaderboardCakes as spec } from '@/server'
+import { getLeaderboardCakes as RouteSpec } from '@/server'
 
 export const getLeaderboardCakes = async ({
     limit,
@@ -11,7 +11,7 @@ export const getLeaderboardCakes = async ({
     offset: number
 }) => {
     try {
-        const response = await api<typeof spec>().cakes.leaderboard.$get({
+        const response = await api<typeof RouteSpec>().cakes.leaderboard.$get({
             query: {
                 limit: String(limit),
                 offset: String(offset),

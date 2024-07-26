@@ -9,8 +9,8 @@ import {
     TableRow,
 } from '@/ui/elements/table'
 import { useState } from 'react'
-import { TableElement } from './TableElement'
 import { LoadMore } from './LoadMore'
+import { TableItem } from './TableItem'
 
 export const LeaderboardDisplay = ({ cakes }: { cakes: Cake[] }) => {
     // State
@@ -20,7 +20,7 @@ export const LeaderboardDisplay = ({ cakes }: { cakes: Cake[] }) => {
 
     return (
         <>
-            <Table>
+            <Table dense>
                 <TableHead>
                     <TableRow>
                         <TableHeader>Rank</TableHeader>
@@ -32,16 +32,18 @@ export const LeaderboardDisplay = ({ cakes }: { cakes: Cake[] }) => {
                 </TableHead>
                 <TableBody>
                     {cakesToDisplay.map((cake, index) => (
-                        <TableElement key={cake.id} cake={cake} index={index} />
+                        <TableItem key={cake.id} cake={cake} index={index} />
                     ))}
                 </TableBody>
             </Table>
-            <LoadMore
-                offset={offset}
-                setOffset={setOffset}
-                setCakesToDisplay={setCakesToDisplay}
-                setHasMore={setHasMore}
-            />
+            {hasMore && (
+                <LoadMore
+                    offset={offset}
+                    setOffset={setOffset}
+                    setCakesToDisplay={setCakesToDisplay}
+                    setHasMore={setHasMore}
+                />
+            )}
         </>
     )
 }
