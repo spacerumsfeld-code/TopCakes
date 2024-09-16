@@ -1,4 +1,4 @@
-import { FaceOff } from './_components/FaceOff'
+import { FaceOff } from './_components/face-off/FaceOff'
 import { Hero } from './_components/Hero'
 
 export default function HomePage() {

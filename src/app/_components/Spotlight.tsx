@@ -1,12 +1,13 @@
 import React from 'react'
 import { cn } from '@/_utils'
 
-type SpotlightProps = {
+export const Spotlight = ({
+    className,
+    fill,
+}: {
     className?: string
     fill?: string
-}
-
-export const Spotlight = ({ className, fill }: SpotlightProps) => {
+}) => {
     return (
         <svg
             className={cn(

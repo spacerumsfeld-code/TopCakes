@@ -1,5 +1,7 @@
 /// <reference path="./.sst/platform/config.d.ts" />
 
+import { readdirSync } from 'fs'
+
 export default $config({
     app(input) {
         return {
@@ -9,25 +11,13 @@ export default $config({
         }
     },
     async run() {
-        const DatabaseUrl = new sst.Secret('DatabaseUrl')
+        const outputs = {}
 
-        const bucket = new sst.aws.Bucket('Bucket', {
-            public: true,
-        })
-
-        const hono = new sst.aws.Function('Server', {
-            handler: 'src/server/handler.handler',
-            link: [DatabaseUrl],
-            url: true,
-        })
-
-        const web = new sst.aws.Nextjs('Web', {
-            link: [bucket, hono],
-        })
-
-        return {
-            webUrl: web.url,
-            serverUrl: hono.url,
+        for (const value of readdirSync('./infra/')) {
+            const result = await import('./infra/' + value)
+            if (result.outputs) Object.assign(outputs, result.outputs)
         }
+
+        return outputs
     },
 })

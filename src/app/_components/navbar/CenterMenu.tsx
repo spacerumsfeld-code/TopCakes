@@ -6,6 +6,7 @@ import { cn } from '@/_utils'
 
 export function CenterMenu({ className }: { className?: string }) {
     const [active, setActive] = useState<string | null>(null)
+
     return (
         <div
             className={cn(

@@ -17,7 +17,7 @@ node_modules
 
 # local env files
 
-.env\*.local
+.env
 
 # nx
 
@@ -44,10 +44,6 @@ scratchpad.md
 
 .DS_Store
 \*.pem
-
-# vercel
-
-.vercel
 
 # typescript
 

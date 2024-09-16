@@ -1,7 +1,7 @@
-import { db } from '../src/clients/db.client'
 import { cakes } from '../src/models'
 import { faker } from '@faker-js/faker'
 import axios from 'axios'
+import { db } from '../src/clients/db.client'
 
 if (!('DATABASE_URL' in process.env)) throw new Error('DATABASE_URL not found')
 

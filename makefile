@@ -6,6 +6,9 @@ dev:
 # QA
 
 lint:
+	npm run lint
+
+lint-fix:
 	npm run lint-fix
 
 typecheck:
@@ -30,10 +33,10 @@ migrate-db:
 
 # CICD
 pre-commit-check:
-	npm run lint-fix
+	npm run lint
 	npm run typecheck
 	npm run build
 
 # Mock Data
 seed:
-	DATABASE_URL=postgresql://postgres.rwqayzdxzxfexixhuhhs:[password]@aws-0-us-east-1.pooler.supabase.com:5432/postgres npx ts-node ./ops/seed.ts
+	DATABASE_URL=[changeme] npx tsx ./ops/seed.ts

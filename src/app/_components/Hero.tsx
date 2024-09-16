@@ -2,9 +2,9 @@ import React from 'react'
 import { Spotlight } from '@/app/_components/Spotlight'
 import { FlipWords } from '@/ui/FlipWord'
 
-export function Hero() {
-    const words = ['delicious', 'scrumptious', 'perfect', 'wonderful']
+const ROTATION_WORDS = ['delicious', 'scrumptious', 'perfect', 'wonderful']
 
+export function Hero() {
     return (
         <>
             <Spotlight
@@ -15,7 +15,7 @@ export function Hero() {
                 <h1 className="text-4xl md:text-7xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 bg-opacity-50">
                     Find the most
                     <br />
-                    <FlipWords words={words} />
+                    <FlipWords words={ROTATION_WORDS} />
                     <br />
                     cake in the world.
                 </h1>

@@ -14,9 +14,13 @@
     "preinstall": "npx only-allow pnpm"
   },
   "dependencies": {
+    "@aws-sdk/client-sesv2": "^3.620.0",
     "@faker-js/faker": "^8.4.1",
     "@headlessui/react": "^2.1.2",
     "@hono/zod-validator": "^0.2.2",
+    "@neondatabase/serverless": "^0.9.5",
+    "@react-email/components": "^0.0.22",
+    "@tailwindcss/forms": "^0.5.7",
     "@typescript-eslint/eslint-plugin": "^7.16.1",
     "@typescript-eslint/parser": "^7.16.1",
     "axios": "^1.7.2",
@@ -25,19 +29,20 @@
     "drizzle-orm": "^0.32.0",
     "eslint-config-prettier": "^9.1.0",
     "framer-motion": "^11.3.4",
-    "hono": "^4.5.0",
+    "hono": "^4.5.5",
+    "jsonwebtoken": "^9.0.2",
     "mini-svg-data-uri": "^1.4.4",
     "next": "14.2.5",
-    "postgres": "^3.4.4",
     "prettier": "^3.3.3",
     "react": "^18",
     "react-dom": "^18",
     "sst": "ion",
+    "superjson": "^2.2.1",
     "tailwind-merge": "^2.4.0",
-    "ts-node": "^10.9.2",
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20.14.10",
     "@types/react": "^18",
     "@types/react-dom": "^18",
@@ -45,6 +50,7 @@
     "eslint-config-next": "14.2.5",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
+    "tsx": "^4.19.1",
     "typescript": "^5"
   }
 }

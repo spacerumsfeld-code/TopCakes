@@ -34,7 +34,6 @@ export function SummaryModal({
         }
 
         // add animation to victorious cake
-
         const { newBattleCake } = await submitVote({
             cakeId: cake.id,
             opposingCakeId,
@@ -57,7 +56,7 @@ export function SummaryModal({
             <ModalTrigger className="group/modal-btn">{children}</ModalTrigger>
             <ModalBody>
                 <ModalContent className="flex flex-col gap-y-8">
-                    <h4 className="text-lg md:text-2xl  text-gray-900 font-bold text-center mb-8">
+                    <h4 className="text-lg md:text-2xl  text-neutral-200 font-bold text-center mb-8">
                         {cake.name}
                     </h4>
                     <div className="flex justify-center items-center">
@@ -86,17 +85,17 @@ export function SummaryModal({
                             />
                         </motion.div>
                     </div>
-                    <div className="text-neutral-900">Ingredients</div>
+                    <div className="text-neutral-200">Ingredients</div>
                     <div className=" grid grid-cols-3 gap-x-4 gap-y-4 items-start justify-start max-w-sm">
                         {cake.ingredients.map((ingredient) => (
                             <div key={ingredient}>
-                                <span className=" text-gray-900 text-sm">
+                                <span className=" text-neutral-200 text-sm">
                                     {ingredient}
                                 </span>
                             </div>
                         ))}
                     </div>
-                    <div className="text-gray-900">Recipe</div>
+                    <div className="text-neutral-200">Recipe</div>
                 </ModalContent>
                 <ModalFooter
                     submitConfig={{

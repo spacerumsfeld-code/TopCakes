@@ -1,7 +1,6 @@
 'use server'
 
-import { api } from '@/clients/api.client'
-import { getRandomCake, postBattle } from '@/server'
+import { api } from '@/clients'
 
 export const submitVote = async ({
     cakeId,
@@ -11,22 +10,17 @@ export const submitVote = async ({
     opposingCakeId: number
 }) => {
     try {
-        await api<typeof postBattle>().battle.$post({
-            json: {
+        const [_, randomCakeResponse] = await Promise.all([
+            api.battle.create.$post({
                 cake1Id: cakeId,
                 cake2Id: opposingCakeId,
                 winnerId: cakeId,
-            },
-        })
-
-        const newBattleCake = await api<
-            typeof getRandomCake
-        >().cakes.random.$get({
-            query: {
-                cakeId: String(cakeId),
-            },
-        })
-        const { data } = await newBattleCake.json()
+            }),
+            api.cake.getRandomCake.$get({
+                cakeId,
+            }),
+        ])
+        const { data } = await randomCakeResponse.json()
 
         return {
             newBattleCake: data!,

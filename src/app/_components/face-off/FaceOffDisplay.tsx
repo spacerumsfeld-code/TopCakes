@@ -1,6 +1,6 @@
 'use client'
 
-import { Cake, CakeCard } from './cake-card/CakeCard'
+import { Cake, CakeCard } from '../cake-card/CakeCard'
 import { useState } from 'react'
 
 export const FaceOffDisplay = ({

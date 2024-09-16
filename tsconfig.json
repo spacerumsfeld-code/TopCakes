@@ -1,17 +1,3 @@
-// for seeding db
-// {
-//     "compilerOptions": {
-//         "target": "ESNext",
-//         "module": "commonjs",
-//         "moduleResolution": "node",
-//         "strict": true,
-//         "esModuleInterop": true,
-//         "skipLibCheck": true,
-//         "forceConsistentCasingInFileNames": true
-//     },
-//     "include": ["./src/**/*", "./ops/**/*"]
-// }
-
 {
     "compilerOptions": {
         "lib": ["dom", "dom.iterable", "esnext"],
