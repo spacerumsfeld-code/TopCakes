@@ -49,9 +49,8 @@ export const cakeRouter = router({
                 error: null,
             })
         } catch (error) {
-            console.error('server error', error)
             throw new HTTPException(400, {
-                message: 'pumpkin error',
+                message: (error as Error).message,
                 cause: (error as Error).cause,
             })
         }
@@ -83,7 +82,6 @@ export const cakeRouter = router({
                     error: null,
                 })
             } catch (error) {
-                console.error(error)
                 throw new HTTPException(400, {
                     message: 'pumpkin error',
                     cause: (error as Error).cause,
