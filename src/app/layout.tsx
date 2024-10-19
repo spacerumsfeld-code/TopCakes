@@ -1,8 +1,16 @@
-import { Fredoka } from 'next/font/google'
-import { Navbar } from './_components/navbar/Navbar'
+import { Quicksand } from 'next/font/google'
+import { Navbar } from './_components/Navbar'
+import { Newsletter } from './_components/Newsletter'
+import { Footer } from './_components/Footer'
+
 import './globals.css'
 
-const inter = Fredoka({ weight: ['400'], subsets: ['latin'] })
+/**
+ * "Fredoka" - A rounded, soft font that has a friendly and approachable feel. It comes in various weights, which makes it versatile for both headings and body text.
+"Quicksand" - A rounded sans-serif font with a geometric touch. It has a modern yet playful look that could complement the cake theme nicely.
+ */
+
+const inter = Quicksand({ weight: ['500'], subsets: ['latin'] })
 
 export default function RootLayout({
     children,
@@ -11,13 +19,11 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body
-                className={`${inter.className} bg-grid-small-white/[0.2] w-full min-h-screen`}
-            >
+            <body className={`${inter.className} w-full min-h-screen`}>
                 <Navbar />
-                <div className="h-full flex flex-col py-8 max-w-7xl mx-auto w-full">
-                    {children}
-                </div>
+                {children}
+                <Newsletter />
+                <Footer />
             </body>
         </html>
     )

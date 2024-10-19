@@ -1,11 +1,5 @@
-import { FaceOff } from './_components/face-off/FaceOff'
-import { Hero } from './_components/Hero'
+import { LandingPage } from './_components/Landing.page'
 
-export default function HomePage() {
-    return (
-        <main className="min-h-screen">
-            <Hero />
-            <FaceOff />
-        </main>
-    )
-}
+// @TODO: SEO, OpenGraph, Metadata
+
+export default LandingPage

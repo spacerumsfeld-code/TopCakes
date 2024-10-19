@@ -31,3 +31,5 @@ class Styled {
         >
     }
 }
+
+export const styled = new Styled()

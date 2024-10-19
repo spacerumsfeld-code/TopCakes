@@ -1,5 +1,5 @@
 import React from 'react'
-import { Spotlight } from '@/app/_components/Spotlight'
+import { Spotlight } from '@/ui/Spotlight'
 import { FlipWords } from '@/ui/FlipWord'
 
 const ROTATION_WORDS = ['delicious', 'scrumptious', 'perfect', 'wonderful']

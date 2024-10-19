@@ -1,5 +1,9 @@
 /// <reference path="./.sst/platform/config.d.ts" />
 
+// @TODO: Vector DB (via sst and AWS) for cake similarity searches
+// @TODO: Event bus for full event-driven architecture
+// @TODO: Lets trawl the sst docs to see what else we could potentially use.
+
 import { readdirSync } from 'fs'
 
 export default $config({

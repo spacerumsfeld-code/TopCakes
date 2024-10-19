@@ -1,4 +1,4 @@
-import { Spotlight } from '../_components/Spotlight'
+import { Spotlight } from '../../ui/Spotlight'
 import { Leaderboard } from './_components/Leaderboard'
 
 export default function LeaderboardPage() {
