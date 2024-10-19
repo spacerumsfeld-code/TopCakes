@@ -3,9 +3,10 @@ import { cakes, battles, cakesToBattles } from '@/models'
 import { eq } from 'drizzle-orm'
 import { sql } from 'drizzle-orm'
 import { z } from 'zod'
-import { defer, handleDeferredTasks } from '@/lib/async'
-import { router } from '../__internals/router'
-import { baseProcedure } from '../__internals'
+import { defer, handleAsync, handleDeferredTasks } from '@/lib/async'
+import { router } from '../_internals/router'
+import { baseProcedure } from '../_internals'
+import { HTTPException } from 'hono/http-exception'
 
 export const battleRouter = router({
     create: baseProcedure
@@ -19,14 +20,22 @@ export const battleRouter = router({
         .mutation(async ({ c, input }) => {
             const { cake1Id, cake2Id, winnerId } = input
 
-            const newBattle = await db
-                .insert(battles)
-                .values({
-                    cake1Id,
-                    cake2Id,
-                    winnerId,
+            const [newBattle, error] = await handleAsync(
+                db
+                    .insert(battles)
+                    .values({
+                        cake1Id,
+                        cake2Id,
+                        winnerId,
+                    })
+                    .returning({ id: battles.id }),
+            )
+            if (error) {
+                throw new HTTPException(400, {
+                    message: 'pumpkin error',
+                    cause: (error as Error).cause,
                 })
-                .returning({ id: battles.id })
+            }
 
             defer([
                 db
@@ -43,11 +52,11 @@ export const battleRouter = router({
                     .where(eq(cakes.id, cake2Id)),
                 db.insert(cakesToBattles).values({
                     cakeId: cake1Id,
-                    battleId: newBattle[0].id,
+                    battleId: newBattle![0].id,
                 }),
                 db.insert(cakesToBattles).values({
                     cakeId: cake2Id,
-                    battleId: newBattle[0].id,
+                    battleId: newBattle![0].id,
                 }),
             ])
 

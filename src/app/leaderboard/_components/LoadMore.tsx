@@ -1,6 +1,8 @@
 import { Cake } from '@/app/_components/cake-card/CakeCard'
-import { getLeaderboardCakes } from '../_action'
+import { getLeaderboardCakes } from '../server'
 import { MagicButton } from '@/ui/MagicButton'
+
+// @TODO: Implement useFormStatus on this one to implement "Load more" functionality
 
 export const LoadMore = ({
     offset,

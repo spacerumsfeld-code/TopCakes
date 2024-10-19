@@ -6,7 +6,6 @@ import Link from 'next/link'
 // @TODO: Add functional links once the related pages are added.
 // @TODO: Ensure mobile functionality
 // @TODO: Fix icon (give transparent background and increase size)
-// @TODO: Properly center all Link Items
 // @TODO: Get shadow to show up as it does in v0 preview.
 
 export const Navbar = () => {
@@ -14,36 +13,38 @@ export const Navbar = () => {
         <header className="bg-white shadow-md">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
                 <nav className="flex justify-between items-center">
-                    <div className="flex items-center">
-                        <Image
-                            src="/topCakesLogo.png"
-                            alt="TopCak.es Logo"
-                            width={32}
-                            height={32}
-                            className="h-8 w-8"
-                        />
-                        <span className="ml-2 text-2xl font-bold text-[#261230]">
-                            TopCak.es
-                        </span>
-                    </div>
-                    <div className="flex space-x-4">
+                    <Link href="/">
+                        <div className="flex items-center">
+                            <Image
+                                src="/topCakesLogo.png"
+                                alt="TopCak.es Logo"
+                                width={32}
+                                height={32}
+                                className="h-8 w-8"
+                            />
+                            <span className="ml-2 text-2xl font-bold text-[#261230]">
+                                TopCak.es
+                            </span>
+                        </div>
+                    </Link>
+                    <div className="flex items-center space-x-4">
                         <Link
-                            href="#create"
+                            href="/leaderboard"
                             className="text-[#261230] hover:text-[#65c3c8]"
                         >
-                            Create
+                            Leaderboard
                         </Link>
                         <Link
-                            href="#battle"
+                            href="bake-off"
                             className="text-[#261230] hover:text-[#65c3c8]"
                         >
-                            Cake Battle
+                            Bakeoff
                         </Link>
                         <Link
-                            href="#marketplace"
+                            href="/bakery"
                             className="text-[#261230] hover:text-[#65c3c8]"
                         >
-                            Marketplace
+                            Bakery
                         </Link>
                         <Button className="bg-[#65c3c8] hover:bg-[#42b2b8] text-white">
                             Sign Up

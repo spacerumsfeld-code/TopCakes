@@ -1,59 +1,31 @@
 import { db } from '@/clients/db.client'
-import { cakes } from '@/models'
-import { eq, not } from 'drizzle-orm'
+import { cakes as cakeTable } from '@/models'
 import { sql } from 'drizzle-orm'
 import { z } from 'zod'
-import { router } from '../__internals/router'
-import { baseProcedure } from '../__internals'
+import { router } from '../_internals/router'
+import { baseProcedure } from '../_internals'
 import { HTTPException } from 'hono/http-exception'
+import { handleAsync } from '@/lib'
 
 export const cakeRouter = router({
-    getRandomCake: baseProcedure
-        .input(
-            z.object({
-                cakeId: z.number().int(),
-            }),
-        )
-        .query(async ({ c, input }) => {
-            try {
-                const { cakeId } = input
-
-                const battleCake = await db
-                    .select()
-                    .from(cakes)
-                    .orderBy(sql`random()`)
-                    .limit(1)
-                    .where(not(eq(cakes.id, Number(cakeId))))
-
-                return c.superjson({
-                    data: battleCake[0],
-                    error: null,
-                })
-            } catch (error) {
-                throw new HTTPException(400, {
-                    message: 'pumpkin error',
-                    cause: (error as Error).cause,
-                })
-            }
-        }),
-    getFaceoffCakes: baseProcedure.query(async ({ c }) => {
-        try {
-            const battleCakes = await db
+    getBakeOffCakes: baseProcedure.query(async ({ c }) => {
+        const [cakes, error] = await handleAsync(
+            db
                 .select()
-                .from(cakes)
+                .from(cakeTable)
                 .orderBy(sql`random()`)
-                .limit(2)
-
-            return c.superjson({
-                data: battleCakes,
-                error: null,
-            })
-        } catch (error) {
+                .limit(2),
+        )
+        if (error) {
             throw new HTTPException(400, {
                 message: (error as Error).message,
                 cause: (error as Error).cause,
             })
         }
+
+        return c.superjson({
+            data: cakes,
+        })
     }),
     getLeaderboardCakes: baseProcedure
         .input(
@@ -63,29 +35,29 @@ export const cakeRouter = router({
             }),
         )
         .query(async ({ c, input }) => {
-            try {
-                const { limit, offset } = input
+            const { limit, offset } = input
 
-                const leaderboardCakes = await db
+            const [cakes, error] = await handleAsync(
+                db
                     .select()
-                    .from(cakes)
+                    .from(cakeTable)
                     .orderBy(sql`wins desc`)
                     .limit(Number(limit))
-                    .offset(Number(offset))
-
-                return c.superjson({
-                    data: {
-                        leaderboardCakes,
-                        nextOffset: Number(offset) + Number(limit),
-                        hasMore: leaderboardCakes.length === Number(limit),
-                    },
-                    error: null,
-                })
-            } catch (error) {
+                    .offset(Number(offset)),
+            )
+            if (error) {
                 throw new HTTPException(400, {
                     message: 'pumpkin error',
                     cause: (error as Error).cause,
                 })
             }
+
+            return c.superjson({
+                data: {
+                    cakes,
+                    nextOffset: Number(offset) + Number(limit),
+                    hasMore: cakes?.length ?? 0 === Number(limit),
+                },
+            })
         }),
 })

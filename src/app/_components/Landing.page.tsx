@@ -1,10 +1,11 @@
 // @TODO: Add query to get 4 cakes to display on this page. Random, "top", or some criteria
 // @TODO: Ensure mobile compatibility
-// @TODO: Create separate 'faceoff' component that we use here as well as the face off page.
 
 import { Button } from '@/ui/components/button'
 import { Card, CardContent } from '@/ui/components/card'
-import { Trophy, ShoppingBag, ChevronRight } from 'lucide-react'
+import { ShoppingBag, ChevronRight } from 'lucide-react'
+import { Suspense } from 'react'
+import { BakeOffAsync } from './bake-off/BakeOff.async'
 
 export const LandingPage = () => {
     return (
@@ -73,58 +74,18 @@ export const LandingPage = () => {
                     </div>
                 </section>
 
-                <section
-                    id="battle"
-                    className="py-20 bg-gradient-to-r from-[#efeae6] to-[#e7e2df]"
-                >
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <h2 className="text-3xl font-bold text-[#261230] text-center mb-12">
-                            Cake Battle Royale
-                        </h2>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
-                            <Card className="bg-white shadow-xl transform hover:scale-105 transition-transform duration-200">
-                                <CardContent className="p-6 text-center">
-                                    <img
-                                        src="/placeholder.svg?height=200&width=200"
-                                        alt="Chocolate Cake"
-                                        className="rounded-full mx-auto mb-4"
-                                    />
-                                    <h3 className="text-xl font-semibold text-[#261230] mb-2">
-                                        Triple Chocolate Delight
-                                    </h3>
-                                    <Button className="mt-4 bg-[#eeaf3a] hover:bg-[#e09915] text-[#261230]">
-                                        Vote
-                                    </Button>
-                                </CardContent>
-                            </Card>
-                            <div className="text-center">
-                                <Trophy className="h-20 w-20 text-[#65c3c8] mx-auto mb-4" />
-                                <p className="text-2xl font-bold text-[#261230]">
-                                    VS
-                                </p>
-                            </div>
-                            <Card className="bg-white shadow-xl transform hover:scale-105 transition-transform duration-200">
-                                <CardContent className="p-6 text-center">
-                                    <img
-                                        src="/placeholder.svg?height=200&width=200"
-                                        alt="Strawberry Cake"
-                                        className="rounded-full mx-auto mb-4"
-                                    />
-                                    <h3 className="text-xl font-semibold text-[#261230] mb-2">
-                                        Strawberry Shortcake Dream
-                                    </h3>
-                                    <Button className="mt-4 bg-[#eeaf3a] hover:bg-[#e09915] text-[#261230]">
-                                        Vote
-                                    </Button>
-                                </CardContent>
-                            </Card>
-                        </div>
-                        <p className="text-center mt-12 text-lg text-[#261230]">
-                            Vote for your favorite cake and help it climb the
-                            leaderboard!
-                        </p>
-                    </div>
+                <section className="py-20 text-center">
+                    <h1 className="text-5xl font-extrabold text-[#261230] mb-4">
+                        Bake-off
+                    </h1>
+                    <p className="text-xl text-[#261230] mb-8">
+                        Vote for your favorite cake and watch it rise to the
+                        top!
+                    </p>
                 </section>
+                <Suspense fallback={<div>Loading...</div>}>
+                    <BakeOffAsync />
+                </Suspense>
 
                 <section id="marketplace" className="py-20 bg-white">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

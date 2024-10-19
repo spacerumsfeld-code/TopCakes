@@ -15,10 +15,10 @@ export const getLeaderboardCakes = async ({
             offset: String(offset),
         })
         const { data } = await response.json()
-        const { leaderboardCakes, nextOffset, hasMore } = data
+        const { cakes, nextOffset, hasMore } = data
 
         return {
-            leaderboardCakes,
+            cakes,
             nextOffset,
             hasMore,
         }
