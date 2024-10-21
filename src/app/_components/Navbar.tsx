@@ -16,11 +16,10 @@ export const Navbar = () => {
                     <Link href="/">
                         <div className="flex items-center">
                             <Image
-                                src="/topCakesLogo.png"
+                                src="/logoNoBG.png"
                                 alt="TopCak.es Logo"
-                                width={32}
-                                height={32}
-                                className="h-8 w-8"
+                                width={45}
+                                height={45}
                             />
                             <span className="ml-2 text-2xl font-bold text-[#261230]">
                                 TopCak.es

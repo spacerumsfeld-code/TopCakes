@@ -34,7 +34,7 @@ export const LandingPage = () => {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                             <div>
                                 <img
-                                    src="/placeholder.svg?height=400&width=400"
+                                    src="/landingCakeOne.jpg"
                                     alt="Cake Example"
                                     className="rounded-lg shadow-2xl"
                                 />
