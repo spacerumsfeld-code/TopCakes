@@ -1,11 +1,9 @@
-import { Button } from '@/ui/components/button'
 import Image from 'next/image'
 import Link from 'next/link'
+import { AuthButton } from './AuthButton'
 
-// @TODO: Add Connect button from ThirdWeb
 // @TODO: Add functional links once the related pages are added.
 // @TODO: Ensure mobile functionality
-// @TODO: Fix icon (give transparent background and increase size)
 // @TODO: Get shadow to show up as it does in v0 preview.
 
 export const Navbar = () => {
@@ -28,16 +26,16 @@ export const Navbar = () => {
                     </Link>
                     <div className="flex items-center space-x-4">
                         <Link
-                            href="/leaderboard"
-                            className="text-[#261230] hover:text-[#65c3c8]"
-                        >
-                            Leaderboard
-                        </Link>
-                        <Link
                             href="bake-off"
                             className="text-[#261230] hover:text-[#65c3c8]"
                         >
                             Bakeoff
+                        </Link>
+                        <Link
+                            href="/leaderboard"
+                            className="text-[#261230] hover:text-[#65c3c8]"
+                        >
+                            Leaderboard
                         </Link>
                         <Link
                             href="/bakery"
@@ -45,9 +43,7 @@ export const Navbar = () => {
                         >
                             Bakery
                         </Link>
-                        <Button className="bg-[#65c3c8] hover:bg-[#42b2b8] text-white">
-                            Sign Up
-                        </Button>
+                        <AuthButton />
                     </div>
                 </nav>
             </div>

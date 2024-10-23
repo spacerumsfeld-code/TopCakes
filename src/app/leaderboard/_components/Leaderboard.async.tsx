@@ -1,4 +1,4 @@
-import { getLeaderboardCakes } from '../server'
+import { getLeaderboardCakes } from '../data'
 import { LeaderboardView } from './Leaderboard.view'
 
 export const LeaderboardAsync = async () => {

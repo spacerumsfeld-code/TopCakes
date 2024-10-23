@@ -10,7 +10,7 @@ export const getLeaderboardCakes = async ({
     offset: number
 }) => {
     try {
-        const response = await api.cake.getLeaderboardCakes.$get({
+        const response = await api.cake.getCakes.$get({
             limit: String(limit),
             offset: String(offset),
         })

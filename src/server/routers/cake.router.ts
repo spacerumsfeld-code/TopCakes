@@ -27,7 +27,7 @@ export const cakeRouter = router({
             data: cakes,
         })
     }),
-    getLeaderboardCakes: baseProcedure
+    getCakes: baseProcedure
         .input(
             z.object({
                 limit: z.string(),

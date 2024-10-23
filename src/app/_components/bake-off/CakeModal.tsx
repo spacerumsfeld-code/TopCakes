@@ -1,13 +1,7 @@
 'use client'
 
 import React from 'react'
-import {
-    Modal,
-    ModalBody,
-    ModalContent,
-    ModalTrigger,
-    // useModal,
-} from '@/ui/Modal'
+import { Modal, ModalBody, ModalContent, ModalTrigger } from '@/ui/Modal'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Cake as CakeLogo, Trophy, UtensilsCrossed } from 'lucide-react'
