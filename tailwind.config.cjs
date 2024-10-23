@@ -5,7 +5,7 @@ const {
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./src/**/*.{ts,tsx}"],
-  darkMode: ["class", "class"],
+  darkMode: "class",
   theme: {
   	extend: {
   		animation: {
@@ -39,7 +39,6 @@ module.exports = {
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
   		},
-  		colors: {}
   	}
   },
   plugins: [

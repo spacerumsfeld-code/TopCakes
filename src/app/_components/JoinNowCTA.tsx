@@ -1,8 +1,7 @@
-'use client'
+import { cn, tempLinkAsButtonClassName } from '@/lib'
+import Link from 'next/link'
 
-import { Button } from '@/ui/components/button'
-
-export const BakeOffCTA = () => {
+export const JoinNowCTA = () => {
     return (
         <section className="py-20 bg-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -13,12 +12,15 @@ export const BakeOffCTA = () => {
                     Bake your own cake and enter the bake-off, with the option
                     to earn royalties!
                 </p>
-                <Button
-                    size="lg"
-                    className="bg-[#65c3c8] hover:bg-[#e7739e] text-white"
+                <Link
+                    href="/"
+                    className={cn(
+                        tempLinkAsButtonClassName,
+                        'bg-[#65c3c8] hover:bg-[#42b2b8] text-white',
+                    )}
                 >
                     Start Baking
-                </Button>
+                </Link>
             </div>
         </section>
     )

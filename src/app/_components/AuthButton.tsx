@@ -5,6 +5,9 @@ import { lightTheme } from 'thirdweb/react'
 import { createWallet, inAppWallet } from 'thirdweb/wallets'
 import { web3Client } from '@/clients/web3.client'
 
+// @TODO: explore a better loading state for this button. It looks a little bleh and color doesnt
+// even load in until after a delay ... wtf
+
 export const wallets = [
     inAppWallet({
         auth: {

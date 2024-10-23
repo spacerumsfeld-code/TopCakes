@@ -14,8 +14,9 @@ export const getLeaderboardCakes = async ({
             limit: String(limit),
             offset: String(offset),
         })
-        const { data } = await response.json()
-        const { cakes, nextOffset, hasMore } = data
+        const {
+            data: { cakes, nextOffset, hasMore },
+        } = await response.json()
 
         return {
             cakes,

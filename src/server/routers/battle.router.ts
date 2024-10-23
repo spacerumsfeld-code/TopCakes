@@ -66,7 +66,6 @@ export const battleRouter = router({
                 data: {
                     success: true,
                 },
-                error: null,
             })
         }),
 })
