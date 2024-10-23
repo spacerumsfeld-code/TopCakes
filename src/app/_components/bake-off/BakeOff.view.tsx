@@ -1,8 +1,5 @@
 'use client'
 
-// @TODO: Make the duplicate code into a BakeOffCard or similar with a cake as prop
-// @TODO: Validate that correct data (order of cakeIds, specifically) is being submitted.
-
 import { Button } from '@/ui/components/button'
 import { Card, CardContent } from '@/ui/components/card'
 import { AnimatePresence, motion } from 'framer-motion'

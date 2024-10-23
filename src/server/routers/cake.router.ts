@@ -24,7 +24,7 @@ export const cakeRouter = router({
         }
 
         return c.superjson({
-            data: cakes,
+            data: { cakes },
         })
     }),
     getCakes: baseProcedure

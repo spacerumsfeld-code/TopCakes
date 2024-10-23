@@ -5,9 +5,11 @@ import { api } from '@/clients'
 export const getBakeOffCakes = async () => {
     try {
         const response = await api.cake.getBakeOffCakes.$get()
-        const { data } = await response.json()
+        const {
+            data: { cakes },
+        } = await response.json()
 
-        return { cakes: data }
+        return { cakes }
     } catch (error) {
         throw new Error(`error in client.getBakeOffCakes: ${error}`)
     }
@@ -21,7 +23,7 @@ export const submitVote = async ({
     otherCakeId: number
 }) => {
     try {
-        const [_, cakes] = await Promise.all([
+        const [_, getCakesResponse] = await Promise.all([
             api.battle.create.$post({
                 cake1Id: cakeId,
                 cake2Id: otherCakeId,
@@ -29,10 +31,12 @@ export const submitVote = async ({
             }),
             api.cake.getBakeOffCakes.$get(),
         ])
-        const { data } = await cakes.json()
+        const {
+            data: { cakes },
+        } = await getCakesResponse.json()
 
         return {
-            newCakes: data,
+            newCakes: cakes,
         }
     } catch (error) {
         throw new Error(`error in client.submitVote: ${JSON.stringify(error)}`)

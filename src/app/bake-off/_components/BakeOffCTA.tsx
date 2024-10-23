@@ -1,8 +1,5 @@
 'use client'
 
-// @TODO: Replicate daisy's btn className in tailwind config so we can apply it to links to make them seem like buttons
-// while preserving server functionality
-
 import { Button } from '@/ui/components/button'
 
 export const BakeOffCTA = () => {
