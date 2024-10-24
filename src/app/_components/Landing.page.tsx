@@ -126,7 +126,7 @@ export const LandingPage = () => {
                                     <Image
                                         height={300}
                                         width={300}
-                                        src={`/placeholder.svg?height=200&width=200&text=Cake+${index + 1}`}
+                                        src={`/sampleCake${index + 1}.jpg`}
                                         alt={item.name}
                                         className="w-full h-48 object-cover"
                                     />
