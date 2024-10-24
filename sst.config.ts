@@ -1,4 +1,4 @@
-// / <reference path="./.sst/platform/config.d.ts" />
+/// <reference path="./.sst/platform/config.d.ts" />
 
 // @TODO: event-driven architecture with event bus publishing events for each router procedure.
 // @TODO: Vector DB (via sst and AWS) for cake similarity searches

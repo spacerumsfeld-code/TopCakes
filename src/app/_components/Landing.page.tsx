@@ -7,6 +7,8 @@ import { ShoppingBag, ChevronRight } from 'lucide-react'
 import { Suspense } from 'react'
 import { BakeOffAsync } from './bake-off/BakeOff.async'
 import Image from 'next/image'
+import { cn, tempLinkAsButtonClassName } from '@/lib'
+import Link from 'next/link'
 
 export const LandingPage = () => {
     return (
@@ -19,12 +21,15 @@ export const LandingPage = () => {
                     <p className="text-xl text-[#261230] mb-8">
                         Create, Battle, and Share Delicious Cake Creations!
                     </p>
-                    <Button
-                        size="lg"
-                        className="bg-[#eeaf3a] hover:bg-[#e09915] text-[#261230] text-lg px-8 py-6 rounded-full shadow-lg"
+                    <Link
+                        href="/create-cake"
+                        className={cn(
+                            tempLinkAsButtonClassName,
+                            'bg-[#eeaf3a] hover:bg-[#e09915] text-[#261230]',
+                        )}
                     >
                         Start Baking
-                    </Button>
+                    </Link>
                 </section>
 
                 <section id="create" className="py-20 bg-white">

@@ -1,6 +1,6 @@
 # Development
 dev:
-	pnpm run dev
+	sst dev pnpm run dev
 
 lint:
 	pnpm run lint
@@ -35,4 +35,4 @@ build:
 	pnpm run build
 
 deploy:
-	pnpm sst deploy --stage production
+	sst deploy --stage production
