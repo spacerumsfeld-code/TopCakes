@@ -1,27 +1,17 @@
 # Development
-
 dev:
-	npm run dev
-
-# QA
+	pnpm run dev
 
 lint:
-	npm run lint
+	pnpm run lint
 
 lint-fix:
-	npm run lint-fix
+	pnpm run lint-fix
 
 typecheck:
 	tsc emit
 
-build:
-	npm run build
-
-test:
-	npm run test
-
-# Database
-
+# Data
 push-db:
 	npx drizzle-kit push
 
@@ -33,10 +23,16 @@ migrate-db:
 
 # CICD
 pre-commit-check:
-	npm run lint
-	npm run typecheck
-	npm run build
+	pnpm run lint
+	pnpm run typecheck
+	pnpm run build
+	# npm run test
 
-# Mock Data
-seed:
-	DATABASE_URL=[changeme] npx tsx ./ops/seed.ts
+test:
+	pnpm run test
+
+build:
+	pnpm run build
+
+deploy:
+	pnpm sst deploy --stage production

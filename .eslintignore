@@ -50,3 +50,9 @@ scratchpad.md
 \*.tsbuildinfo
 next-env.d.ts
 sst-env.d.ts
+
+# Internals
+
+_internals
+
+api.client.ts

@@ -8,7 +8,6 @@
     "lint-fix": "next lint --fix",
     "typecheck": "tsc --noEmit",
     "build": "next build",
-    "start": "next start",
     "db": "drizzle-kit",
     "db:studio": "drizzle-kit studio",
     "preinstall": "npx only-allow pnpm"
@@ -17,6 +16,7 @@
     "@neondatabase/serverless": "^0.9.5",
     "@radix-ui/react-select": "^2.1.2",
     "@radix-ui/react-slot": "^1.1.0",
+    "@tailwindcss/forms": "^0.5.7",
     "@typescript-eslint/eslint-plugin": "^7.16.1",
     "@typescript-eslint/parser": "^7.16.1",
     "class-variance-authority": "^0.7.0",
@@ -31,11 +31,10 @@
     "prettier": "^3.3.3",
     "react": "^18.3.1",
     "react-dom": "^18",
-    "sst": "ion",
+    "sst": "^3.2.49",
     "superjson": "^2.2.1",
     "tailwind-merge": "^2.4.0",
     "tailwindcss-animate": "^1.0.7",
-    "@tailwindcss/forms": "^0.5.7",
     "thirdweb": "^5.63.2",
     "zod": "^3.23.8"
   },

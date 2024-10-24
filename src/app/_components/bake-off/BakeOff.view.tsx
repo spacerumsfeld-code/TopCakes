@@ -26,10 +26,8 @@ export const BakeOffView = ({ cakes: initialCakes }: { cakes: Cake[] }) => {
             cakeId: winningCakeId,
             otherCakeId: cakes.find(({ id }) => id !== winningCakeId)!.id,
         })
-        setTimeout(() => {
-            setWinner(null)
-            setCakes(newCakes!)
-        }, 1500)
+        setWinner(null)
+        setCakes(newCakes!)
     }
 
     // Render

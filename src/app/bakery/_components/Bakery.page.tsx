@@ -13,6 +13,7 @@ import {
 import { ShoppingBag } from 'lucide-react'
 import Link from 'next/link'
 import { BakeryHeader } from './BakeryHeader'
+import Image from 'next/image'
 
 // @TODO: Create cake router method to get cakes here. Need it be different from leaderboard cakes?
 // would be cool if not! But, there may be relevant differences that need to be displayed in the Bakery.
@@ -199,7 +200,9 @@ export const BakeryPage = () => {
                                 <Link href={`/cake/${cake.id}`} key={cake.id}>
                                     <Card className="bg-white shadow-xl transition-all duration-300 hover:shadow-2xl hover:scale-105 cursor-pointer">
                                         <CardContent className="p-6">
-                                            <img
+                                            <Image
+                                                width={300}
+                                                height={300}
                                                 src={`/placeholder.svg?height=200&width=200&text=${cake.name}`}
                                                 alt={cake.name}
                                                 className="w-full h-48 object-cover rounded-lg mb-4"

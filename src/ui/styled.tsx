@@ -7,7 +7,7 @@ class Styled {
         return twMerge(clsx(inputs))
     }
 
-    div<T extends object = {}>(
+    div<T extends object = object>(
         defaultClassName?: string,
         conditionalStyles?: (props: T) => ClassValue,
     ) {

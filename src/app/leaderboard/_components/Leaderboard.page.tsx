@@ -2,8 +2,6 @@ import { Suspense } from 'react'
 import { LeaderboardAsync } from './Leaderboard.async'
 import { LeaderboardIntro } from './LeaderboardIntro'
 
-// @TODO: Explore just passing the promise to client and using "use" with Suspense.
-
 export const LeaderboardPage = () => {
     // Render
     return (

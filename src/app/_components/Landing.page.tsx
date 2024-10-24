@@ -6,6 +6,7 @@ import { Card, CardContent } from '@/ui/components/card'
 import { ShoppingBag, ChevronRight } from 'lucide-react'
 import { Suspense } from 'react'
 import { BakeOffAsync } from './bake-off/BakeOff.async'
+import Image from 'next/image'
 
 export const LandingPage = () => {
     return (
@@ -33,8 +34,10 @@ export const LandingPage = () => {
                         </h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                             <div>
-                                <img
+                                <Image
                                     src="/landingCakeOne.jpg"
+                                    width="400"
+                                    height="400"
                                     alt="Cake Example"
                                     className="rounded-lg shadow-2xl"
                                 />
@@ -115,7 +118,9 @@ export const LandingPage = () => {
                                     key={index}
                                     className="overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300"
                                 >
-                                    <img
+                                    <Image
+                                        height={300}
+                                        width={300}
                                         src={`/placeholder.svg?height=200&width=200&text=Cake+${index + 1}`}
                                         alt={item.name}
                                         className="w-full h-48 object-cover"

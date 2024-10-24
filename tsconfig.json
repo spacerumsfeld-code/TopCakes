@@ -23,10 +23,11 @@
     },
     "include": [
         "next-env.d.ts",
+        // "sst-env.d.ts",
         "**/*.ts",
         "**/*.tsx",
         ".next/types/**/*.ts",
         "tailwind.config.cjs"
     ],
-    "exclude": ["node_modules", "sst.config.ts"]
+    "exclude": ["node_modules", "sst.config.ts", "infra"]
 }

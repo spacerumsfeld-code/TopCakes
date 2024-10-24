@@ -1,3 +1,5 @@
+/// <reference path="../.sst/platform/config.d.ts" />
+
 import { secret } from './secret'
 
 export const server = new sst.aws.Function('Server', {

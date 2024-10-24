@@ -1,7 +1,9 @@
 'use server'
 
 import { api } from '@/clients'
+import { Resource } from 'sst'
 
+console.info('testing one two three', Resource.Server.url)
 export const getLeaderboardCakes = async ({
     limit,
     offset,

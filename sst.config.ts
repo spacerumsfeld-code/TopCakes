@@ -1,8 +1,12 @@
-/// <reference path="./.sst/platform/config.d.ts" />
+// / <reference path="./.sst/platform/config.d.ts" />
 
+// @TODO: event-driven architecture with event bus publishing events for each router procedure.
 // @TODO: Vector DB (via sst and AWS) for cake similarity searches
-// @TODO: Event bus for full event-driven architecture
-// @TODO: Lets trawl the sst docs to see what else we could potentially use.
+// @TODO: do a check of all resources to re-use (or not) for TEST stage, which code to test is deployed to in CICD.
+// (re-use bucket, re-use secrets I think, which means re-using dev database. maybe we have seperate branch
+// of DB created within CICD that we then give the schema of the current code -- how else would we do full test
+// of code with schema changes given due consideration?
+// production versions of DB, api keys, etc.
 
 import { readdirSync } from 'fs'
 
