@@ -1,14 +1,14 @@
-// @TODO: Add query to get 4 cakes to display on this page. Random, "top", or some criteria
 // @TODO: Ensure mobile compatibility
 
 import { Button } from '@/ui/components/button'
-import { Card, CardContent } from '@/ui/components/card'
-import { ShoppingBag, ChevronRight } from 'lucide-react'
+import { ChevronRight } from 'lucide-react'
 import { Suspense } from 'react'
 import { BakeOffAsync } from './bake-off/BakeOff.async'
 import Image from 'next/image'
 import { cn, tempLinkAsButtonClassName } from '@/lib'
 import Link from 'next/link'
+import { SampleCakes } from './sample-cakes/SampleCakes'
+import { BakeOffSkeleton } from './bake-off/BakeOff.skeleton'
 
 export const LandingPage = () => {
     return (
@@ -91,75 +91,12 @@ export const LandingPage = () => {
                         top!
                     </p>
                 </section>
-                <Suspense fallback={<div>Loading...</div>}>
+
+                <Suspense fallback={<BakeOffSkeleton />}>
                     <BakeOffAsync />
                 </Suspense>
 
-                <section id="marketplace" className="py-20 bg-white">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <h2 className="text-3xl font-bold text-[#261230] text-center mb-12">
-                            Cake Marketplace
-                        </h2>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                            {[
-                                {
-                                    name: 'Unicorn Sprinkle Surprise',
-                                    price: '0.1 ETH',
-                                },
-                                {
-                                    name: 'Chocolate Lava Explosion',
-                                    price: '0.3 ETH',
-                                },
-                                {
-                                    name: "Grandma's Secret Apple Pie",
-                                    price: '1.4 ETH',
-                                },
-                                {
-                                    name: 'Matcha Green Tea Delight',
-                                    price: '2.89 ETH',
-                                },
-                            ].map((item, index) => (
-                                <Card
-                                    key={index}
-                                    className="overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300"
-                                >
-                                    <Image
-                                        height={300}
-                                        width={300}
-                                        src={`/sampleCake${index + 1}.jpg`}
-                                        alt={item.name}
-                                        className="w-full h-48 object-cover"
-                                    />
-                                    <CardContent className="p-4">
-                                        <h3 className="text-lg font-semibold text-[#261230] mb-2">
-                                            {item.name}
-                                        </h3>
-                                        <div className="flex justify-between items-center">
-                                            <span className="text-[#261230] font-bold">
-                                                {item.price}
-                                            </span>
-                                            <Button
-                                                size="sm"
-                                                className="bg-[#65c3c8] hover:bg-[#42b2b8] text-white"
-                                            >
-                                                <ShoppingBag className="h-4 w-4 mr-2" />
-                                                Buy
-                                            </Button>
-                                        </div>
-                                    </CardContent>
-                                </Card>
-                            ))}
-                        </div>
-                        <div className="text-center mt-12">
-                            <Button
-                                size="lg"
-                                className="bg-[#65c3c8] hover:bg-[#42b2b8] text-white"
-                            >
-                                Explore Marketplace
-                            </Button>
-                        </div>
-                    </div>
-                </section>
+                <SampleCakes />
             </main>
         </div>
     )

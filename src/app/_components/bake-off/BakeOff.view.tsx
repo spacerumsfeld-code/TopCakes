@@ -10,6 +10,8 @@ import Image from 'next/image'
 
 import { Cake } from '@/models/cake.interface'
 import { CakeModal } from './CakeModal'
+import Link from 'next/link'
+import { cn, tempLinkAsButtonClassName } from '@/lib'
 
 export const BakeOffView = ({ cakes: initialCakes }: { cakes: Cake[] }) => {
     // State
@@ -139,15 +141,15 @@ export const BakeOffView = ({ cakes: initialCakes }: { cakes: Cake[] }) => {
                     </AnimatePresence>
                 </div>
                 <div className="text-center mt-8">
-                    <Button
-                        size="lg"
-                        className="bg-[#ef9fbc] hover:bg-[#e7739e] text-white"
-                        onClick={() => {
-                            console.log('Navigating to leaderboard')
-                        }}
+                    <Link
+                        href="/leaderboard"
+                        className={cn(
+                            tempLinkAsButtonClassName,
+                            'bg-[#ef9fbc] hover:bg-[#e7739e] text-white',
+                        )}
                     >
                         View Leaderboard
-                    </Button>
+                    </Link>
                 </div>
             </div>
         </section>

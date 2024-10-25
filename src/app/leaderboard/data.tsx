@@ -1,7 +1,6 @@
 'use server'
 
 import { api } from '@/clients'
-import { Resource } from 'sst'
 
 export const getLeaderboardCakes = async ({
     limit,

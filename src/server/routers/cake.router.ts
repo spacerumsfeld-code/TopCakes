@@ -35,6 +35,29 @@ export const cakeRouter = router({
                 data: { cake: cakes![0] },
             })
         }),
+    getSampleCakes: baseProcedure.query(async ({ c }) => {
+        const [cakes, error] = await handleAsync(
+            db
+                .select({
+                    id: cakeTable.id,
+                    name: cakeTable.name,
+                    image_url: cakeTable.image_url,
+                })
+                .from(cakeTable)
+                .orderBy(sql`random()`)
+                .limit(4),
+        )
+        if (error) {
+            throw new HTTPException(400, {
+                message: (error as Error).message,
+                cause: (error as Error).cause,
+            })
+        }
+
+        return c.superjson({
+            data: { cakes },
+        })
+    }),
     getBakeOffCakes: baseProcedure.query(async ({ c }) => {
         const [cakes, error] = await handleAsync(
             db
