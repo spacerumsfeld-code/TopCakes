@@ -29,7 +29,7 @@ export const CakePage = async (props: { params: { id: string } }) => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
                         <div className="space-y-2">
                             <Image
-                                src={cake.image_url}
+                                src={cake.imageUrl}
                                 alt={cake.name}
                                 width={500}
                                 height={500}
@@ -73,7 +73,7 @@ export const CakePage = async (props: { params: { id: string } }) => {
                             <Card className="bg-white shadow-lg">
                                 <CardContent className="p-6">
                                     <h2 className="text-2xl font-semibold text-[#261230] mb-4">
-                                        Cake Details
+                                        Details
                                     </h2>
                                     <div className="space-y-2">
                                         <p>
@@ -81,6 +81,12 @@ export const CakePage = async (props: { params: { id: string } }) => {
                                                 Type:
                                             </span>{' '}
                                             {cake.type}
+                                        </p>
+                                        <p>
+                                            <span className="font-semibold">
+                                                Wins:
+                                            </span>{' '}
+                                            {cake.description}
                                         </p>
                                         <p>
                                             <span className="font-semibold">

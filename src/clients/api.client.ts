@@ -5,37 +5,40 @@ import { StatusCode } from 'hono/utils/http-status'
 import { Resource } from 'sst'
 import superjson from 'superjson'
 
-export const baseClient = hc<ApiSpec>(Resource.Server.url, {
-    fetch: async (input: RequestInfo | URL, init?: RequestInit) => {
-        const response = await fetch(input, { ...init, cache: 'no-store' })
+export const baseClient = hc<ApiSpec>(
+    process.env.IS_LOCAL! ? process.env.SERVER_URL! : Resource.Server.url,
+    {
+        fetch: async (input: RequestInfo | URL, init?: RequestInit) => {
+            const response = await fetch(input, { ...init, cache: 'no-store' })
 
-        if (!response.ok) {
-            console.info(JSON.stringify(response))
-            throw new HTTPException(response.status as StatusCode, {
-                message: response.statusText,
-                res: response,
+            if (!response.ok) {
+                console.info(JSON.stringify(response))
+                throw new HTTPException(response.status as StatusCode, {
+                    message: response.statusText,
+                    res: response,
+                })
+            }
+
+            const serializedJson = await response.text()
+            const deserializedJson = superjson.parse(serializedJson)
+
+            const superJSONResponse = new Response(
+                JSON.stringify(deserializedJson),
+                {
+                    status: response.status,
+                    statusText: response.statusText,
+                    headers: response.headers,
+                },
+            )
+
+            Object.defineProperty(superJSONResponse, 'json', {
+                value: async () => deserializedJson,
             })
-        }
 
-        const serializedJson = await response.text()
-        const deserializedJson = superjson.parse(serializedJson)
-
-        const superJSONResponse = new Response(
-            JSON.stringify(deserializedJson),
-            {
-                status: response.status,
-                statusText: response.statusText,
-                headers: response.headers,
-            },
-        )
-
-        Object.defineProperty(superJSONResponse, 'json', {
-            value: async () => deserializedJson,
-        })
-
-        return superJSONResponse
+            return superJSONResponse
+        },
     },
-})['api']
+)['api']
 
 function getHandler(obj: Object, ...keys: string[]) {
     let current = obj

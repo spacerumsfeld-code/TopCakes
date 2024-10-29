@@ -23,35 +23,67 @@ import {
 import { CreateCakeHeader } from './CreateCakeHeader'
 import { useActiveAccount } from 'thirdweb/react'
 import { ConnectNow } from './ConnectNow'
+import { createCake, generatePresignedUrl } from '../data'
+import { CakeType } from '@/domain'
+import { toast } from 'sonner'
 
-const cakeTypes = [
-    'Chocolate',
-    'Vanilla',
-    'Red Velvet',
-    'Carrot',
-    'Lemon',
-    'Strawberry',
-    'Cheesecake',
-    'Other',
-]
+import * as z from 'zod'
+import useLoading from '@/hooks/useLoading.hook'
+import { ButtonLoader } from '@/ui/ButtonLoader'
+
+const createCakeSchema = z.object({
+    name: z.string().min(3),
+    description: z.string().min(1),
+    imageUrl: z.string().min(1),
+    type: z.nativeEnum(CakeType),
+    recipe: z.array(z.string()).min(1).max(10),
+    ingredients: z
+        .array(
+            z.object({
+                name: z.string(),
+                quantity: z.number().min(1),
+                unit: z.string(),
+            }),
+        )
+        .min(1),
+})
+
+const mapZodErrorsToSentences = (errors: z.ZodError): string => {
+    switch (errors.issues.flatMap((issue) => issue.path)[0]) {
+        case 'name':
+            return "Don't forget to name your cake!"
+        case 'type':
+            return "Don't forget to select a cake type!"
+        case 'description':
+            return "Don't forget to describe your cake!"
+        case 'imageUrl':
+            return "Don't forget to upload an image!"
+        case 'ingredients':
+            return "Don't forget to add ingredients!"
+        case 'recipe':
+            return "Don't forget to add a recipe!"
+        default:
+            return 'Something went wrong!'
+    }
+}
 
 export const CreateCakePage = () => {
-    // State
+    /** @State */
     const account = useActiveAccount()
-
     const [cakeName, setCakeName] = useState('')
-    const [cakeType, setCakeType] = useState('')
     const [cakeDescription, setCakeDescription] = useState('')
-    const [recipe, setRecipe] = useState('')
+    const [cakeType, setCakeType] = useState<CakeType>(CakeType.Other)
+    const [recipe, setRecipe] = useState<string[]>([])
     const [ingredients, setIngredients] = useState([
-        { name: '', quantity: '', unit: '' },
+        { name: '', quantity: 0, unit: '' },
     ])
-    const [cakeImage, setCakeImage] = useState<File | null>(null)
-    const [previewUrl, setPreviewUrl] = useState<string | null>(null)
+    const [cakeImageUrl, setCakeImageUrl] = useState<string>('')
     const fileInputRef = useRef<HTMLInputElement>(null)
+    const { isLoading, startLoading, stopLoading } = useLoading()
 
+    /** @Interactivity */
     const handleAddIngredient = () => {
-        setIngredients([...ingredients, { name: '', quantity: '', unit: '' }])
+        setIngredients([...ingredients, { name: '', quantity: 0, unit: '' }])
     }
 
     const handleRemoveIngredient = (index: number) => {
@@ -62,7 +94,7 @@ export const CreateCakePage = () => {
     const handleIngredientChange = (
         index: number,
         field: string,
-        value: string,
+        value: string | number,
     ) => {
         const newIngredients = ingredients.map((ingredient, i) => {
             if (i === index) {
@@ -73,35 +105,100 @@ export const CreateCakePage = () => {
         setIngredients(newIngredients)
     }
 
-    const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0]
-        if (file) {
-            // get presignedUrl from server action -> file router
-            // make request to presignedUrl to upload this file.
-            // set file in state, fine. Or just a few key properties.
-            // imageUrl from bucket gets added to final submission to server. nothing more.
-            setCakeImage(file)
-            const reader = new FileReader()
-            reader.onloadend = () => {
-                setPreviewUrl(reader.result as string)
-            }
-            reader.readAsDataURL(file)
+    const handleAddRecipeStep = () => {
+        if (recipe.length < 10) {
+            setRecipe([...recipe, ''])
         }
     }
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleRemoveRecipeStep = (index: number) => {
+        const newRecipe = recipe.filter((_, i) => i !== index)
+        setRecipe(newRecipe)
+    }
+
+    const handleRecipeStepChange = (index: number, value: string) => {
+        const newRecipe = recipe.map((step, i) => {
+            if (i === index) {
+                return value
+            }
+            return step
+        })
+        setRecipe(newRecipe)
+    }
+
+    const handleImageUpload = async (
+        e: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        startLoading('fileUpload')
+        const file = e.target.files?.[0]
+        if (file) {
+            const { url: presignedUrl } = await generatePresignedUrl()
+
+            let createFileResponse
+            try {
+                const uploadConfig = {
+                    body: file,
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': file.type,
+                    },
+                }
+
+                createFileResponse = await fetch(presignedUrl, uploadConfig)
+                if (!createFileResponse.ok) {
+                    console.error(
+                        'Upload error',
+                        createFileResponse.status,
+                        createFileResponse.statusText,
+                    )
+                }
+
+                const { url } = createFileResponse
+                const formattedUrl = url.split('?')[0]
+
+                setCakeImageUrl(formattedUrl)
+            } catch (error) {
+                console.error('error!!!!', error)
+                toast.error('Something went wrong!')
+                return
+            }
+
+            const { url } = createFileResponse
+            const formattedUrl = url.split('?')[0]
+
+            setCakeImageUrl(formattedUrl)
+            stopLoading('fileUpload')
+        }
+    }
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
 
-        console.log({
+        const isValid = createCakeSchema.safeParse({
+            name: cakeName,
+            description: cakeDescription,
+            imageUrl: cakeImageUrl!,
+            type: cakeType,
+            recipe,
+            ingredients,
+        })
+
+        if (!isValid.success) {
+            toast.error(mapZodErrorsToSentences(isValid.error))
+            return
+        }
+
+        await createCake({
             cakeName,
             cakeType,
             cakeDescription,
             recipe,
             ingredients,
-            cakeImage,
+            imageUrl: cakeImageUrl,
         })
     }
 
+    /** @Render */
     return (
         <div className="min-h-screen bg-white flex flex-col">
             <main>
@@ -143,7 +240,6 @@ export const CreateCakePage = () => {
                                                     setCakeName(e.target.value)
                                                 }
                                                 className="w-full"
-                                                required
                                             />
                                         </div>
 
@@ -168,13 +264,19 @@ export const CreateCakePage = () => {
                                             </label>
                                             <Select
                                                 value={cakeType}
-                                                onValueChange={setCakeType}
+                                                onValueChange={
+                                                    setCakeType as (
+                                                        value: CakeType,
+                                                    ) => void
+                                                }
                                             >
                                                 <SelectTrigger className="w-full">
                                                     <SelectValue placeholder="Select a cake type" />
                                                 </SelectTrigger>
                                                 <SelectContent>
-                                                    {cakeTypes.map((type) => (
+                                                    {Object.values(
+                                                        CakeType,
+                                                    ).map((type) => (
                                                         <SelectItem
                                                             key={type}
                                                             value={type}
@@ -214,7 +316,6 @@ export const CreateCakePage = () => {
                                                     )
                                                 }
                                                 className="w-full h-24"
-                                                required
                                             />
                                         </div>
 
@@ -253,15 +354,19 @@ export const CreateCakePage = () => {
                                                     className="bg-[#65c3c8] hover:bg-[#42b2b8] text-white"
                                                 >
                                                     <Upload className="w-4 h-4 mr-2" />
-                                                    Upload Image
+                                                    {isLoading('fileUpload') ? (
+                                                        <ButtonLoader />
+                                                    ) : (
+                                                        'Upload Image'
+                                                    )}
                                                 </Button>
-                                                {previewUrl && (
+                                                {cakeImageUrl && (
                                                     <div className="ml-4">
                                                         <Image
-                                                            src={previewUrl}
+                                                            src={cakeImageUrl}
                                                             alt="Cake preview"
-                                                            width={100}
-                                                            height={100}
+                                                            width={200}
+                                                            height={200}
                                                             className="rounded-md object-cover"
                                                         />
                                                     </div>
@@ -305,7 +410,6 @@ export const CreateCakePage = () => {
                                                                 )
                                                             }
                                                             className="flex-grow"
-                                                            required
                                                         />
                                                         <Input
                                                             placeholder="Quantity"
@@ -316,12 +420,13 @@ export const CreateCakePage = () => {
                                                                 handleIngredientChange(
                                                                     index,
                                                                     'quantity',
-                                                                    e.target
-                                                                        .value,
+                                                                    Number(
+                                                                        e.target
+                                                                            .value,
+                                                                    ),
                                                                 )
                                                             }
                                                             className="w-20"
-                                                            required
                                                         />
                                                         <Input
                                                             placeholder="Unit"
@@ -337,7 +442,6 @@ export const CreateCakePage = () => {
                                                                 )
                                                             }
                                                             className="w-20"
-                                                            required
                                                         />
                                                         <Button
                                                             type="button"
@@ -388,15 +492,54 @@ export const CreateCakePage = () => {
                                                     </TooltipContent>
                                                 </Tooltip>
                                             </label>
-                                            <Textarea
-                                                id="recipe"
-                                                value={recipe}
-                                                onChange={(e) =>
-                                                    setRecipe(e.target.value)
-                                                }
-                                                className="w-full h-40"
-                                                required
-                                            />
+                                            {recipe.map((step, index) => (
+                                                <div
+                                                    key={index}
+                                                    className="flex items-center space-x-2 mb-2"
+                                                >
+                                                    <Input
+                                                        placeholder={`Step ${
+                                                            index + 1
+                                                        }`}
+                                                        value={step}
+                                                        onChange={(e) =>
+                                                            handleRecipeStepChange(
+                                                                index,
+                                                                e.target.value,
+                                                            )
+                                                        }
+                                                        className="flex-grow"
+                                                    />
+                                                    <Button
+                                                        type="button"
+                                                        onClick={() =>
+                                                            handleRemoveRecipeStep(
+                                                                index,
+                                                            )
+                                                        }
+                                                        className="p-2"
+                                                        variant="ghost"
+                                                    >
+                                                        <MinusCircle className="h-5 w-5 text-[#ef9fbc]" />
+                                                        <span className="sr-only">
+                                                            Remove Step
+                                                        </span>
+                                                    </Button>
+                                                </div>
+                                            ))}
+                                            {recipe.length < 10 && (
+                                                <Button
+                                                    type="button"
+                                                    onClick={
+                                                        handleAddRecipeStep
+                                                    }
+                                                    className="mt-2"
+                                                    variant="outline"
+                                                >
+                                                    <PlusCircle className="h-5 w-5 mr-2" />
+                                                    Add Step
+                                                </Button>
+                                            )}
                                         </div>
                                     </TooltipProvider>
 

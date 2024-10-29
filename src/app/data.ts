@@ -11,6 +11,8 @@ export const getSampleCakes = async () => {
 
         return { cakes }
     } catch (error) {
-        throw new Error(`Error in client.getSampleCakes: ${error}`)
+        throw new Error(
+            `Error in client.getSampleCakes: ${JSON.stringify(error)}`,
+        )
     }
 }

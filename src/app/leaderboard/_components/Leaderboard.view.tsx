@@ -7,7 +7,7 @@ import {
     TableRow,
 } from '@/ui/components/table'
 import { Trophy } from 'lucide-react'
-import { Cake } from '@/models/cake.interface'
+import { Cake } from '@/domain/cake.interface'
 
 export const LeaderboardView = ({ cakes }: { cakes: Cake[] }) => {
     return (

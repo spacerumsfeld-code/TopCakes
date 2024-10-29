@@ -5,6 +5,7 @@ import { Newsletter } from './_components/Newsletter'
 import { Footer } from './_components/Footer'
 
 import './globals.css'
+import { Toaster } from '@/ui/components/sonner'
 
 const inter = Quicksand({ weight: ['500'], subsets: ['latin'] })
 
@@ -20,6 +21,7 @@ export default function RootLayout({
                     <Navbar />
                     {children}
                     <Newsletter />
+                    <Toaster richColors position="top-right" />
                     <Footer />
                 </Web3Provider>
             </body>

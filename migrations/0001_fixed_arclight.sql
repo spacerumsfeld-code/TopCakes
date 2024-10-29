@@ -1,0 +1,1 @@
+ALTER TABLE "cakes" ADD COLUMN "recipe" text[] DEFAULT '{}'::text[] NOT NULL;

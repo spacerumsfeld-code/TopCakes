@@ -5,10 +5,10 @@ import { Card, CardContent } from '@/ui/components/card'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Trophy } from 'lucide-react'
 import { useState } from 'react'
-import { submitVote } from '@/app/bake-off/server'
+import { submitVote } from '@/app/bake-off/data'
 import Image from 'next/image'
 
-import { Cake } from '@/models/cake.interface'
+import { Cake } from '@/domain/cake'
 import { CakeModal } from './CakeModal'
 import Link from 'next/link'
 import { cn, tempLinkAsButtonClassName } from '@/lib'
@@ -48,7 +48,7 @@ export const BakeOffView = ({ cakes: initialCakes }: { cakes: Cake[] }) => {
                             <Card className="bg-white shadow-xl">
                                 <CardContent className="p-6 text-center">
                                     <Image
-                                        src={leftCake.image_url}
+                                        src={leftCake.imageUrl}
                                         alt={leftCake.name}
                                         width={400}
                                         height={400}
@@ -111,7 +111,7 @@ export const BakeOffView = ({ cakes: initialCakes }: { cakes: Cake[] }) => {
                             <Card className="bg-white shadow-xl">
                                 <CardContent className="p-6 text-center">
                                     <Image
-                                        src={rightCake.image_url}
+                                        src={rightCake.imageUrl}
                                         alt={rightCake.name}
                                         width={400}
                                         height={400}

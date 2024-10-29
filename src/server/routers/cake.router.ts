@@ -1,5 +1,5 @@
 import { db } from '@/clients/db.client'
-import { cakes as cakeTable } from '@/models'
+import { cakes as cakeTable, CakeType } from '@/domain'
 import { sql, eq } from 'drizzle-orm'
 import { z } from 'zod'
 import { router } from '../_internals/router'
@@ -41,7 +41,7 @@ export const cakeRouter = router({
                 .select({
                     id: cakeTable.id,
                     name: cakeTable.name,
-                    image_url: cakeTable.image_url,
+                    image_url: cakeTable.imageUrl,
                 })
                 .from(cakeTable)
                 .orderBy(sql`random()`)
@@ -107,6 +107,44 @@ export const cakeRouter = router({
                     cakes,
                     nextOffset: Number(offset) + Number(limit),
                     hasMore: cakes?.length ?? 0 === Number(limit),
+                },
+            })
+        }),
+    createCake: baseProcedure
+        .input(
+            z.object({
+                name: z.string().min(3),
+                description: z.string().min(1),
+                imageUrl: z.string(),
+                type: z.nativeEnum(CakeType),
+                recipe: z.array(z.string()).max(10),
+                ingredients: z.array(
+                    z.object({
+                        name: z.string(),
+                        quantity: z.number().min(1),
+                        unit: z.string(),
+                    }),
+                ),
+            }),
+        )
+        .mutation(async ({ c, input }) => {
+            const [createCakeResponse, error] = await handleAsync(
+                db
+                    .insert(cakeTable)
+                    .values(input)
+                    .returning({ id: cakeTable.id }),
+            )
+            if (error) {
+                throw new HTTPException(400, {
+                    message: 'Error creating cake',
+                    cause: (error as Error).cause,
+                })
+            }
+
+            return c.superjson({
+                data: {
+                    id: createCakeResponse![0].id,
+                    success: true,
                 },
             })
         }),

@@ -1,4 +1,4 @@
-import { getBakeOffCakes } from '../../bake-off/server'
+import { getBakeOffCakes } from '../../bake-off/data'
 import { BakeOffView } from './BakeOff.view'
 
 export const BakeOffAsync = async () => {

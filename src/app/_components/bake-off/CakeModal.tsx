@@ -5,7 +5,7 @@ import { Modal, ModalBody, ModalContent, ModalTrigger } from '@/ui/Modal'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Cake as CakeLogo, Trophy, UtensilsCrossed } from 'lucide-react'
-import { Cake } from '@/models/cake.interface'
+import { Cake } from '@/domain/cake.interface'
 
 export function CakeModal({
     children,

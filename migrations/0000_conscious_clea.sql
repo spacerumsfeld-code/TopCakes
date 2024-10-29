@@ -1,5 +1,11 @@
+DO $$ BEGIN
+ CREATE TYPE "public"."type" AS ENUM('Angel Food', 'Bundt', 'Carrot', 'Cheesecake', 'Chiffon', 'Cupcake', 'Fruitcake', 'Genoise', 'Ice Cream Cake', 'Layer Cake', 'Pound Cake', 'Sheet Cake', 'Sponge Cake', 'Upside Down Cake', 'Black Forest', 'Chocolate Cake', 'Chocolate Lava', 'Flourless Chocolate', 'Battenberg', 'Basque Burnt Cheesecake', 'Cassata', 'Japanese Cheesecake', 'Lamington', 'Mille-Feuille', 'Opera Cake', 'Panettone', 'Pavlova', 'Red Velvet', 'Rum Cake', 'Sacher Torte', 'Tres Leches', 'Victoria Sponge', 'Drip Cake', 'Funfetti', 'Geode Cake', 'Mirror Glaze', 'Naked Cake', 'Ombre Cake', 'Pinata Cake', 'Rainbow Cake', 'Rosette Cake', 'Keto Cake', 'Gluten-Free Cake', 'Vegan Cake', 'Sugar-Free Cake', 'Baklava Cake', 'Bibingka', 'Black Sesame Cake', 'Gulab Jamun Cake', 'Mochi Cake', 'Tiramisu', 'Ube Cake', 'Yule Log', 'Halloween Cake', 'Christmas Fruitcake', 'Easter Lamb Cake', 'St. Patrick''s Day Cake', 'Birthday Cake', 'Wedding Cake', 'Baby Shower Cake', 'Engagement Cake', 'Graduation Cake', 'Custom Cake', 'Other');
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "battles" (
-	"id" integer PRIMARY KEY NOT NULL,
+	"id" serial PRIMARY KEY NOT NULL,
 	"cake1_id" integer NOT NULL,
 	"cake2_id" integer NOT NULL,
 	"winner_id" integer NOT NULL
@@ -15,24 +21,11 @@ CREATE TABLE IF NOT EXISTS "cakes_to_battles" (
 CREATE TABLE IF NOT EXISTS "cakes" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"name" varchar(255) NOT NULL,
-	"image_url" varchar(255) NOT NULL,
-	"type" varchar(255) NOT NULL,
-	"recipe" varchar(255) NOT NULL,
-	"ingredients" text[] DEFAULT '{}'::text[] NOT NULL,
 	"description" varchar(1024) NOT NULL,
+	"image_url" varchar(255) NOT NULL,
 	"wins" integer DEFAULT 0 NOT NULL,
-	"losses" integer DEFAULT 0 NOT NULL,
-	"vector" integer[] DEFAULT '{}'::integer[] NOT NULL
-);
---> statement-breakpoint
-CREATE TABLE IF NOT EXISTS "users" (
-	"id" serial PRIMARY KEY NOT NULL,
-	"username" varchar(255) NOT NULL,
-	"email" varchar(255) NOT NULL,
-	"created_at" date DEFAULT now() NOT NULL,
-	"last_updated_at" date DEFAULT now() NOT NULL,
-	CONSTRAINT "users_username_unique" UNIQUE("username"),
-	CONSTRAINT "users_email_unique" UNIQUE("email")
+	"type" "type",
+	"ingredients" jsonb DEFAULT '[]'::jsonb NOT NULL
 );
 --> statement-breakpoint
 DO $$ BEGIN

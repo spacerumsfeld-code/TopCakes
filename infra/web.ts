@@ -1,5 +1,3 @@
-/// <reference path="../.sst/platform/config.d.ts" />
-
 import { server } from './server'
 import { bucket } from './storage'
 import { allSecrets } from './secret'
@@ -9,6 +7,10 @@ const web = new sst.aws.Nextjs('Web', {
     domain: {
         name: 'topcak.es',
         redirects: ['www.topcak.es'],
+    },
+    dev: {
+        autostart: true,
+        command: 'pnpm run dev',
     },
     // warm: 1,
 })

@@ -1,6 +1,6 @@
 {
-  "id": "8a38af8b-c459-4935-8491-81c9f87fbfcf",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "411d0713-f052-40a3-a5e0-98b723c07f04",
+  "prevId": "a17ec0ee-6282-47f8-b099-5309c7972731",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -181,7 +181,14 @@
           "type": "type",
           "typeSchema": "public",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
+        },
+        "recipe": {
+          "name": "recipe",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'{}'::text[]"
         },
         "ingredients": {
           "name": "ingredients",

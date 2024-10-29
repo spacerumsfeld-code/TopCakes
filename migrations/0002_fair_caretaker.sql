@@ -1,0 +1,1 @@
+ALTER TABLE "cakes" ALTER COLUMN "type" SET NOT NULL;
