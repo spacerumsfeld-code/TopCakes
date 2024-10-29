@@ -5,7 +5,7 @@ import { Modal, ModalBody, ModalContent, ModalTrigger } from '@/ui/Modal'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Cake as CakeLogo, Trophy, UtensilsCrossed } from 'lucide-react'
-import { Cake } from '@/domain/cake.interface'
+import { Cake } from '@/domain/cake'
 
 export function CakeModal({
     children,
@@ -33,7 +33,7 @@ export function CakeModal({
                             className="rounded-xl p-1 bg-white dark:bg-[#42b2b8] border border-[#65c3c8] overflow-hidden shadow-lg"
                         >
                             <Image
-                                src={cake.image_url}
+                                src={cake.imageUrl}
                                 alt={cake.name}
                                 width={300}
                                 height={300}

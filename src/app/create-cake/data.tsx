@@ -1,6 +1,6 @@
 'use server'
 
-import { api } from '@/clients'
+import { client as api } from '@/clients/api.client'
 import { CakeType } from '@/domain'
 import { redirect } from 'next/navigation'
 
@@ -20,7 +20,7 @@ export const createCake = async ({
     imageUrl: string
 }) => {
     try {
-        const response = await api.cake.createCake.$post({
+        await api.cake.createCake.$post({
             name: cakeName,
             type: cakeType,
             description: cakeDescription,
@@ -28,8 +28,6 @@ export const createCake = async ({
             ingredients,
             imageUrl,
         })
-        const { data } = await response.json()
-        const { success } = data
 
         redirect('/')
     } catch (error) {
