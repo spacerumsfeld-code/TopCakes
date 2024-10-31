@@ -16,10 +16,10 @@ export function CakeModal({
 }) {
     return (
         <Modal>
-            <ModalTrigger className="bg-[#65c3c8] text-white flex justify-center items-center px-4 py-2 rounded-md hover:bg-[#42b2b8] transition duration-300 group/modal-btn">
+            <ModalTrigger className="cursor-pointer bg-[#65c3c8] text-white flex justify-center items-center px-4 py-2 rounded-md hover:bg-[#42b2b8] transition duration-300 group/modal-btn">
                 {children}
             </ModalTrigger>
-            <ModalBody className="bg-[#faf7f5] dark:bg-[#261230] text-[#261230] dark:text-white">
+            <ModalBody className="bg-[#faf7f5] dark:bg-[#261230] text-[#261230] dark:text-white overflow-scroll">
                 <ModalContent>
                     <h2 className="text-3xl font-bold text-center mb-6">
                         {cake.name}
@@ -37,7 +37,7 @@ export function CakeModal({
                                 alt={cake.name}
                                 width={300}
                                 height={300}
-                                className="rounded-lg object-cover"
+                                className="w-[300px] h-[300px] object-cover rounded-lg mb-4"
                             />
                         </motion.div>
                     </div>
@@ -54,11 +54,19 @@ export function CakeModal({
                         </div>
                     </div>
                     <div className="bg-white dark:bg-[#200f29] p-6 rounded-lg mb-8">
-                        <h3 className="text-xl font-bold mb-4 flex items-center">
-                            <UtensilsCrossed className="mr-2 text-[#65c3c8] h-5 w-5" />
-                            Recipe
+                        <h3 className="text-xl font-bold mb-4 flex flex-col justify-left gap-y-4">
+                            <div className="flex items-center">
+                                <UtensilsCrossed className="mr-2 text-[#65c3c8] h-5 w-5" />
+                                <span className="font-semibold">Recipe</span>
+                            </div>
+                            <ol className="list-decimal list-inside space-y-2">
+                                {cake.recipe.map((step, index) => (
+                                    <li key={index} className="text-[#261230]">
+                                        {step}
+                                    </li>
+                                ))}
+                            </ol>
                         </h3>
-                        <p className="whitespace-pre-line">{cake.recipe}</p>
                     </div>
                 </ModalContent>
             </ModalBody>

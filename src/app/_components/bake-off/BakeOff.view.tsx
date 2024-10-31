@@ -3,7 +3,6 @@
 import { Button } from '@/ui/components/button'
 import { Card, CardContent } from '@/ui/components/card'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Trophy } from 'lucide-react'
 import { useState } from 'react'
 import { submitVote } from '@/app/bake-off/data'
 import Image from 'next/image'
@@ -45,29 +44,26 @@ export const BakeOffView = ({ cakes: initialCakes }: { cakes: Cake[] }) => {
                             exit={{ opacity: 0, scale: 0.7 }}
                             transition={{ duration: 1 }}
                         >
-                            <Card className="bg-white shadow-xl">
-                                <CardContent className="p-6 text-center">
+                            <Card className="bg-white shadow-xl transition-all duration-300">
+                                <CardContent className="p-6">
                                     <Image
+                                        width={300}
+                                        height={300}
                                         src={leftCake.imageUrl}
                                         alt={leftCake.name}
-                                        width={400}
-                                        height={400}
-                                        className="rounded-lg object-cover"
+                                        className="w-full h-48 object-cover rounded-lg mb-4"
                                     />
-                                    <h3 className="text-xl font-semibold text-[#261230] mb-2">
+                                    <h3 className="text-lg font-semibold text-[#261230] mb-2 truncate w-full">
                                         {leftCake.name}
                                     </h3>
-                                    <p className="text-sm text-gray-600 mb-4">
-                                        {leftCake.description}
-                                    </p>
                                     <CakeModal cake={leftCake}>
-                                        <Button>Recipe</Button>
+                                        Recipe
                                     </CakeModal>
                                     <Button
                                         onClick={() =>
                                             handleSubmitVote(leftCake.id)
                                         }
-                                        className="mt-4 bg-[#eeaf3a] hover:bg-[#e09915] text-[#261230]"
+                                        className="mt-4 bg-[#eeaf3a] hover:bg-[#e09915] text-[#261230] w-full"
                                         disabled={winner !== null}
                                     >
                                         Vote
@@ -78,7 +74,6 @@ export const BakeOffView = ({ cakes: initialCakes }: { cakes: Cake[] }) => {
                     </AnimatePresence>
 
                     <div className="text-center">
-                        <Trophy className="h-20 w-20 text-[#65c3c8] mx-auto mb-4" />
                         <p className="text-2xl font-bold text-[#261230]">VS</p>
                         <AnimatePresence mode="wait">
                             {winner && (
@@ -108,29 +103,26 @@ export const BakeOffView = ({ cakes: initialCakes }: { cakes: Cake[] }) => {
                             exit={{ opacity: 0, scale: 0.8 }}
                             transition={{ duration: 0.5 }}
                         >
-                            <Card className="bg-white shadow-xl">
-                                <CardContent className="p-6 text-center">
+                            <Card className="bg-white shadow-xl transition-all duration-300">
+                                <CardContent className="p-6">
                                     <Image
+                                        width={300}
+                                        height={300}
                                         src={rightCake.imageUrl}
                                         alt={rightCake.name}
-                                        width={400}
-                                        height={400}
-                                        className="rounded-lg object-cover"
+                                        className="w-full h-48 object-cover rounded-lg mb-4"
                                     />
-                                    <h3 className="text-xl font-semibold text-[#261230] mb-2">
+                                    <h3 className="text-lg font-semibold text-[#261230] mb-2 truncate w-full">
                                         {rightCake.name}
                                     </h3>
-                                    <p className="text-sm text-gray-600 mb-4">
-                                        {rightCake.description}
-                                    </p>
                                     <CakeModal cake={rightCake}>
-                                        <Button>Recipe</Button>
+                                        Recipe
                                     </CakeModal>
                                     <Button
                                         onClick={() =>
                                             handleSubmitVote(rightCake.id)
                                         }
-                                        className="mt-4 bg-[#eeaf3a] hover:bg-[#e09915] text-[#261230]"
+                                        className="mt-4 bg-[#eeaf3a] hover:bg-[#e09915] text-[#261230] w-full"
                                         disabled={winner !== null}
                                     >
                                         Vote
