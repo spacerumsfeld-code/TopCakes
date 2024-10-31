@@ -158,7 +158,6 @@ export const CreateCakePage = () => {
 
                 setCakeImageUrl(formattedUrl)
             } catch (error) {
-                console.error('error!!!!', error)
                 toast.error('Something went wrong!')
                 return
             }

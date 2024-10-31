@@ -12,7 +12,6 @@ export const baseClient = hc<ApiSpec>(
             const response = await fetch(input, { ...init, cache: 'no-store' })
 
             if (!response.ok) {
-                console.info(JSON.stringify(response))
                 throw new HTTPException(response.status as StatusCode, {
                     message: response.statusText,
                     res: response,

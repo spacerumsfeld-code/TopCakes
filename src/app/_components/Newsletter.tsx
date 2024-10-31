@@ -10,9 +10,9 @@ import { useState } from 'react'
 export const Newsletter = () => {
     const [email, setEmail] = useState('')
 
+    // simply submit email to resend "audience"
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
-        console.log('Signed up with:', email)
         setEmail('')
     }
 

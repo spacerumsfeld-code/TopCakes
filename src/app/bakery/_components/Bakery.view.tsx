@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { Cake } from '@/domain/cake'
 import { cn } from '@/lib'
 import { LoadMore } from './LoadMore'
+import { BakeryEmptyState } from './Bakery.empty'
 
 const getButtonColor = (index: number) => {
     const colors = [
@@ -22,6 +23,8 @@ export const BakeryView = (props: {
     nextOffset: number
     hasMore: boolean
 }) => {
+    if (!props.cakes.length) return <BakeryEmptyState />
+
     return (
         <>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -36,16 +39,13 @@ export const BakeryView = (props: {
                                     alt={cake.name}
                                     className="w-full h-48 object-cover rounded-lg mb-4"
                                 />
-                                <h3 className="text-lg font-semibold text-[#261230] mb-2">
+                                <h3 className="text-lg font-semibold text-[#261230] mb-2 truncate w-full">
                                     {cake.name}
                                 </h3>
-                                <p className="text-sm text-gray-600 mb-4">
+                                <p className="text-sm text-gray-600 mb-4 line-clamp">
                                     {cake.description}
                                 </p>
                                 <div className="flex justify-between items-center">
-                                    {/* <span className="text-[#261230] font-bold">
-                                                    {cake.price} ETH
-                                                </span> */}
                                     <span className="text-[#65c3c8]">
                                         Wins: {cake.wins}
                                     </span>

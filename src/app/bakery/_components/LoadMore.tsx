@@ -5,6 +5,7 @@ import { Button } from '@/ui/components/button'
 import { useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 import { getBakeryCakes } from '../data'
+import { Loader2 } from 'lucide-react'
 
 export const LoadMore = (props: { nextOffset: number }) => {
     // @State
@@ -37,13 +38,16 @@ export const LoadMore = (props: { nextOffset: number }) => {
     return (
         <>
             {component ? (
-                component
+                <div className="mt-8">{component}</div>
             ) : (
                 <div className="flex flex-col mx-auto gap-y-2 w-full items-center py-8">
                     <span>Keep Exploring the Bakery</span>
-                    <Button onClick={() => handleLoadMore()}>
+                    <Button
+                        className="bg-[#65c3c8] hover:bg-[#42b2b8] text-white"
+                        onClick={() => handleLoadMore()}
+                    >
                         {isLoading ? (
-                            <div className="loading loading-dots loading-md" />
+                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                         ) : (
                             <div>Load More</div>
                         )}

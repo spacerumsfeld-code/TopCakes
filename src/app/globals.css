@@ -27,3 +27,10 @@
     --radius: 0.5rem;
   }
 }
+
+.line-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Define the maximum number of lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

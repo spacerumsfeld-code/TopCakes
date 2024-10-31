@@ -116,33 +116,40 @@ export const cakeRouter = router({
             z.object({
                 limit: z.number(),
                 offset: z.number(),
-                filter: z.nativeEnum(CakeFilter).optional(),
-                sort: z.nativeEnum(CakeSort).optional(),
+                filter: z.nativeEnum(CakeFilter),
+                sort: z.nativeEnum(CakeSort),
             }),
         )
         .query(async ({ c, input }) => {
-            const { limit, offset } = input
+            const { limit, offset, filter, sort } = input
 
-            const [cakes, error] = await handleAsync(
-                db
-                    .select()
-                    .from(cakeTable)
-                    .orderBy(sql`wins desc`)
-                    .limit(Number(limit))
-                    .offset(Number(offset)),
-            )
+            const orderBy =
+                sort === CakeSort.Wins ? sql`wins desc` : sql`created_at desc`
+
+            const query = db
+                .select()
+                .from(cakeTable)
+                .orderBy(orderBy)
+                .limit(Number(limit))
+                .offset(Number(offset))
+
+            if (filter !== CakeFilter.None) {
+                query.where(eq(cakeTable.type, filter as unknown as CakeType))
+            }
+
+            const [getBakeryCakesResponse, error] = await handleAsync(query)
             if (error) {
                 throw new HTTPException(400, {
-                    message: 'pumpkin error',
+                    message: error.message,
                     cause: (error as Error).cause,
                 })
             }
 
             return c.superjson({
                 data: {
-                    cakes,
+                    cakes: getBakeryCakesResponse,
                     nextOffset: Number(offset) + Number(limit),
-                    hasMore: !(cakes!.length < limit),
+                    hasMore: !(getBakeryCakesResponse!.length < limit),
                 },
             })
         }),

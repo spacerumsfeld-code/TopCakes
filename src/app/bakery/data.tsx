@@ -2,14 +2,13 @@
 
 import { client as api } from '@/clients/api.client'
 import { BakeryView } from './_components/Bakery.view'
-// import { CakeType } from '@/domain'
-// import { CakeSort } from '@/domain/cake'
+import { CakeFilter, CakeSort } from '@/domain/cake'
 
 export const getBakeryCakes = async (args: {
     limit: number
     offset: number
-    // filter: CakeType
-    // sort: CakeSort
+    filter: CakeFilter
+    sort: CakeSort
 }) => {
     try {
         const response = await api.cake.getBakeryCakes.$get(args)

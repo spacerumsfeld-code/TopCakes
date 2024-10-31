@@ -7,6 +7,7 @@ import {
     jsonb,
     text,
     pgEnum,
+    timestamp,
 } from 'drizzle-orm/pg-core'
 import { CakeType } from './cake'
 import { cakesToBattles } from './'
@@ -31,6 +32,8 @@ export const cakes = pgTable('cakes', {
         .notNull()
         .default(sql`'[]'::jsonb`)
         .$type<{ name: string; quantity: number; unit: string }[]>(),
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+    lastUpdatedAt: timestamp('last_updated_at').defaultNow().notNull(),
 })
 
 export const cakeRelations = relations(cakes, ({ many }) => ({
