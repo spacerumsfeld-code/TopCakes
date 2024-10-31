@@ -17,6 +17,7 @@ export const router = <T extends Record<string, OperationType<any, any>>>(
     const route = new Hono<{ Bindings: Bindings; Variables: any }>().onError(
         (err, c) => {
             if (err instanceof HTTPException) {
+                console.error(`Error on server: ${err.message}`)
                 return c.json(
                     {
                         error: 'Server Error',
@@ -26,6 +27,7 @@ export const router = <T extends Record<string, OperationType<any, any>>>(
                     err.status,
                 )
             } else {
+                console.error(`Unknown Error on server: ${err.message}`)
                 return c.json(
                     {
                         error: 'Unknown Error',

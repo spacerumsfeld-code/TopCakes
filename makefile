@@ -25,10 +25,11 @@ seed:
 	DATABASE_URL=[changeme] npx tsx ops/seed.ts
 
 # CICD
+# Need to run make dev in separate pane for links to work.
 pre-commit-check:
 	pnpm run lint
 	pnpm run typecheck
-	pnpm run build
+	sst dev pnpm run build
 
 test:
 	pnpm run test
@@ -36,5 +37,6 @@ test:
 build:
 	pnpm run build
 
+# Multiplexer runs; sst links work.
 deploy:
 	sst deploy --stage production

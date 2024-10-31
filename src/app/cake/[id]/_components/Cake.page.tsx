@@ -84,7 +84,7 @@ export const CakePage = async (props: { params: { id: string } }) => {
                                         </p>
                                         <p>
                                             <span className="font-semibold">
-                                                Wins:
+                                                Description:
                                             </span>{' '}
                                             {cake.description}
                                         </p>
@@ -100,12 +100,16 @@ export const CakePage = async (props: { params: { id: string } }) => {
 
                             <Card className="bg-white shadow-lg mb-12">
                                 <CardContent className="p-6">
-                                    <h2 className="text-2xl font-semibold text-[#261230] mb-4">
-                                        Recipe
-                                    </h2>
-                                    <p className="whitespace-pre-line text-[#261230]">
-                                        {cake.recipe}
-                                    </p>
+                                    <ol className="list-decimal list-inside space-y-2">
+                                        {cake.recipe.map((step, index) => (
+                                            <li
+                                                key={index}
+                                                className="text-[#261230]"
+                                            >
+                                                {step}
+                                            </li>
+                                        ))}
+                                    </ol>
                                 </CardContent>
                             </Card>
                             <Card className="bg-white shadow-lg">

@@ -1,1 +1,55 @@
-// @Implement useFormState (they mightve changed the name) to do pagination here with minimal js on the client.
+'use client'
+
+import { CakeFilter, CakeSort } from '@/domain/cake'
+import { Button } from '@/ui/components/button'
+import { useSearchParams } from 'next/navigation'
+import { useState } from 'react'
+import { getBakeryCakes } from '../data'
+
+export const LoadMore = (props: { nextOffset: number }) => {
+    // @State
+    const [component, setComponent] = useState<JSX.Element | null>(null)
+    const [isLoading, setIsLoading] = useState(false)
+
+    const params = useSearchParams()
+    const filter =
+        CakeFilter[params.get('filter') as keyof typeof CakeFilter] ??
+        CakeFilter.None
+    const sort =
+        CakeSort[params.get('sort') as keyof typeof CakeSort] ?? CakeSort.Wins
+
+    const getBakeryCakesArgs = {
+        limit: 28,
+        offset: props.nextOffset,
+        filter,
+        sort,
+    }
+
+    // @Interactivity
+    const handleLoadMore = async () => {
+        setIsLoading(true)
+        const { component: CakeBlock } =
+            await getBakeryCakes(getBakeryCakesArgs)
+        setComponent(CakeBlock)
+    }
+
+    // @Render
+    return (
+        <>
+            {component ? (
+                component
+            ) : (
+                <div className="flex flex-col mx-auto gap-y-2 w-full items-center py-8">
+                    <span>Keep Exploring the Bakery</span>
+                    <Button onClick={() => handleLoadMore()}>
+                        {isLoading ? (
+                            <div className="loading loading-dots loading-md" />
+                        ) : (
+                            <div>Load More</div>
+                        )}
+                    </Button>
+                </div>
+            )}
+        </>
+    )
+}

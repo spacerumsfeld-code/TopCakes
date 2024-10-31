@@ -6,6 +6,7 @@ import { router } from '../_internals/router'
 import { baseProcedure } from '../_internals'
 import { HTTPException } from 'hono/http-exception'
 import { handleAsync } from '@/lib'
+import { CakeFilter, CakeSort } from '@/domain/cake'
 
 export const cakeRouter = router({
     getCakeById: baseProcedure
@@ -77,7 +78,7 @@ export const cakeRouter = router({
             data: { cakes },
         })
     }),
-    getCakes: baseProcedure
+    getLeaderboardCakes: baseProcedure
         .input(
             z.object({
                 limit: z.string(),
@@ -107,6 +108,41 @@ export const cakeRouter = router({
                     cakes,
                     nextOffset: Number(offset) + Number(limit),
                     hasMore: cakes?.length ?? 0 === Number(limit),
+                },
+            })
+        }),
+    getBakeryCakes: baseProcedure
+        .input(
+            z.object({
+                limit: z.number(),
+                offset: z.number(),
+                filter: z.nativeEnum(CakeFilter).optional(),
+                sort: z.nativeEnum(CakeSort).optional(),
+            }),
+        )
+        .query(async ({ c, input }) => {
+            const { limit, offset } = input
+
+            const [cakes, error] = await handleAsync(
+                db
+                    .select()
+                    .from(cakeTable)
+                    .orderBy(sql`wins desc`)
+                    .limit(Number(limit))
+                    .offset(Number(offset)),
+            )
+            if (error) {
+                throw new HTTPException(400, {
+                    message: 'pumpkin error',
+                    cause: (error as Error).cause,
+                })
+            }
+
+            return c.superjson({
+                data: {
+                    cakes,
+                    nextOffset: Number(offset) + Number(limit),
+                    hasMore: !(cakes!.length < limit),
                 },
             })
         }),

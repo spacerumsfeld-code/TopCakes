@@ -2,6 +2,7 @@
 
 export const secret = {
     DatabaseUrl: new sst.Secret('DatabaseUrl'),
+    ThirdWebClientId: new sst.Secret('ThirdWebClientId'),
     ThirdWebApiKey: new sst.Secret('ThirdWebApiKey'),
 }
 

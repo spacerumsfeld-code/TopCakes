@@ -45,7 +45,6 @@ export const generatePresignedUrl = async () => {
 
         return { url }
     } catch (error) {
-        console.error(error)
         throw new Error(
             `error in client.generatePresignedUrl: ${JSON.stringify(error)}`,
         )

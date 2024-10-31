@@ -1,6 +1,6 @@
 'use server'
 
-import { api } from '@/clients'
+import { client as api } from '@/clients/api.client'
 
 export const getCakeById = async (id: number) => {
     try {

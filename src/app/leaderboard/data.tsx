@@ -1,6 +1,6 @@
 'use server'
 
-import { api } from '@/clients'
+import { client as api } from '@/clients/api.client'
 
 export const getLeaderboardCakes = async ({
     limit,
@@ -10,7 +10,7 @@ export const getLeaderboardCakes = async ({
     offset: number
 }) => {
     try {
-        const response = await api.cake.getCakes.$get({
+        const response = await api.cake.getLeaderboardCakes.$get({
             limit: String(limit),
             offset: String(offset),
         })

@@ -3,7 +3,7 @@ import { neon } from '@neondatabase/serverless'
 import { Resource } from 'sst'
 
 const sql = neon(
-    process.env.IS_LOCAL!
+    process.env.NEXT_PUBLIC_IS_LOCAL!
         ? process.env.DATABASE_URL!
         : Resource.DatabaseUrl.value,
 )
