@@ -34,6 +34,7 @@ export const cakes = pgTable('cakes', {
         .$type<{ name: string; quantity: number; unit: string }[]>(),
     createdAt: timestamp('created_at').defaultNow().notNull(),
     lastUpdatedAt: timestamp('last_updated_at').defaultNow().notNull(),
+    ownerAddress: varchar('owner_address', { length: 255 }),
 })
 
 export const cakeRelations = relations(cakes, ({ many }) => ({

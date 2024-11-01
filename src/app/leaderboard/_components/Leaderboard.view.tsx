@@ -1,3 +1,5 @@
+'use client'
+
 import {
     Table,
     TableBody,
@@ -8,8 +10,44 @@ import {
 } from '@/ui/components/table'
 import { Trophy } from 'lucide-react'
 import { Cake } from '@/domain/cake'
+import { useState } from 'react'
+import { getLeaderboardCakes } from '../data'
+import useLoading from '@/hooks/useLoading.hook'
+import useIntersectionObserver from '@/hooks/useIntersectionObserver.hook'
 
-export const LeaderboardView = ({ cakes }: { cakes: Cake[] }) => {
+export const LeaderboardView = (props: {
+    cakes: Cake[]
+    limit: number
+    offset: number
+}) => {
+    // @State
+    const [localCakes, setLocalCakes] = useState<Cake[]>(props.cakes)
+    const [localOffset, setLocalOffset] = useState<number>(props.offset)
+    const [localHasMore, setLocalHasMore] = useState<boolean>(true)
+    const { isLoading, startLoading, stopLoading } = useLoading()
+
+    // @Interactivity
+    const { ref } = useIntersectionObserver({
+        triggerOnce: false,
+        shouldUpdate: Boolean(localHasMore && !isLoading('leaderboardCakes')),
+        onChange: async (inView: boolean) => {
+            if (inView) {
+                startLoading('leaderboardCakes')
+                const { cakes, nextOffset, hasMore } =
+                    await getLeaderboardCakes({
+                        limit: props.limit,
+                        offset: localOffset + props.limit,
+                    })
+                stopLoading('leaderboardCakes')
+
+                setLocalCakes((prev) => [...prev, ...cakes!])
+                setLocalOffset(nextOffset)
+                setLocalHasMore(hasMore)
+            }
+        },
+    })
+
+    // @Render
     return (
         <div className="min-h-screen bg-[#faf7f5]">
             <main>
@@ -32,7 +70,7 @@ export const LeaderboardView = ({ cakes }: { cakes: Cake[] }) => {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {cakes.map((cake, index) => (
+                                {localCakes.map((cake, index) => (
                                     <TableRow key={cake.id}>
                                         <TableCell className="font-medium">
                                             <div className="flex items-center">
@@ -64,6 +102,7 @@ export const LeaderboardView = ({ cakes }: { cakes: Cake[] }) => {
                                 ))}
                             </TableBody>
                         </Table>
+                        <div ref={ref} />
                     </div>
                 </section>
             </main>

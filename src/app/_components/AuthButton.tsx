@@ -4,6 +4,7 @@ import { ConnectButton } from 'thirdweb/react'
 import { lightTheme } from 'thirdweb/react'
 import { createWallet, inAppWallet } from 'thirdweb/wallets'
 import { web3Client } from '@/clients/web3.client'
+import { sepolia, ethereum } from 'thirdweb/chains'
 
 export const wallets = [
     inAppWallet({
@@ -21,6 +22,7 @@ export const AuthButton = () => {
     return (
         <ConnectButton
             client={web3Client}
+            chain={process.env.NEXT_PUBLIC_IS_LOCAL! ? sepolia : ethereum}
             wallets={wallets}
             theme={lightTheme({
                 colors: {

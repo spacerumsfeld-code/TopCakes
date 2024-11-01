@@ -6,11 +6,12 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useState } from 'react'
 import { submitVote } from '@/app/bake-off/data'
 import Image from 'next/image'
-
 import { Cake } from '@/domain/cake'
 import { CakeModal } from './CakeModal'
 import Link from 'next/link'
 import { cn, tempLinkAsButtonClassName } from '@/lib'
+
+// @TODO: change size of skeleton to match size of card
 
 export const BakeOffView = ({ cakes: initialCakes }: { cakes: Cake[] }) => {
     // State

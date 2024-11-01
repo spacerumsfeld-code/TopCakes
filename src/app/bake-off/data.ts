@@ -11,7 +11,6 @@ export const getBakeOffCakes = async () => {
 
         return { cakes }
     } catch (error) {
-        console.error(error)
         throw new Error(`error in client.getBakeOffCakes: ${error}`)
     }
 }

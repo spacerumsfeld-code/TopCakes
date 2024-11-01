@@ -5,6 +5,7 @@ import { CakeType } from '@/domain'
 import { redirect } from 'next/navigation'
 
 export const createCake = async ({
+    address,
     cakeName,
     cakeType,
     cakeDescription,
@@ -12,6 +13,7 @@ export const createCake = async ({
     ingredients,
     imageUrl,
 }: {
+    address: string
     cakeName: string
     cakeType: CakeType
     cakeDescription: string
@@ -21,6 +23,7 @@ export const createCake = async ({
 }) => {
     try {
         await api.cake.createCake.$post({
+            ownerAddress: address,
             name: cakeName,
             type: cakeType,
             description: cakeDescription,
@@ -28,12 +31,11 @@ export const createCake = async ({
             ingredients,
             imageUrl,
         })
-
-        redirect('/')
     } catch (error) {
-        console.error(error)
         throw new Error(`error in client.createCake: ${JSON.stringify(error)}`)
     }
+
+    redirect('/?toast=cake-created')
 }
 
 export const generatePresignedUrl = async () => {

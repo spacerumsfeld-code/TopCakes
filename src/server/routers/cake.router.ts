@@ -1,6 +1,6 @@
 import { db } from '@/clients/db.client'
 import { cakes as cakeTable, CakeType } from '@/domain'
-import { sql, eq } from 'drizzle-orm'
+import { sql, eq, and } from 'drizzle-orm'
 import { z } from 'zod'
 import { router } from '../_internals/router'
 import { baseProcedure } from '../_internals'
@@ -34,6 +34,56 @@ export const cakeRouter = router({
 
             return c.superjson({
                 data: { cake: cakes![0] },
+            })
+        }),
+    getCakesByAddress: baseProcedure
+        .input(
+            z.object({
+                limit: z.number(),
+                offset: z.number(),
+                filter: z.nativeEnum(CakeFilter),
+                sort: z.nativeEnum(CakeSort),
+                address: z.string(),
+            }),
+        )
+        .query(async ({ c, input }) => {
+            const { limit, offset, filter, sort, address } = input
+
+            const orderBy =
+                sort === CakeSort.Wins ? sql`wins desc` : sql`created_at desc`
+
+            const query = db
+                .select()
+                .from(cakeTable)
+                .orderBy(orderBy)
+                .limit(limit)
+                .offset(offset)
+
+            if (filter !== CakeFilter.None) {
+                query.where(
+                    and(
+                        eq(cakeTable.type, filter as unknown as CakeType),
+                        eq(cakeTable.ownerAddress, address),
+                    ),
+                )
+            } else {
+                query.where(eq(cakeTable.ownerAddress, address))
+            }
+
+            const [getCakesByAddressResponse, error] = await handleAsync(query)
+            if (error) {
+                throw new HTTPException(400, {
+                    message: error.message,
+                    cause: (error as Error).cause,
+                })
+            }
+
+            return c.superjson({
+                data: {
+                    cakes: getCakesByAddressResponse,
+                    nextOffset: Number(offset) + Number(limit),
+                    hasMore: !(getCakesByAddressResponse!.length < limit),
+                },
             })
         }),
     getSampleCakes: baseProcedure.query(async ({ c }) => {
@@ -81,8 +131,8 @@ export const cakeRouter = router({
     getLeaderboardCakes: baseProcedure
         .input(
             z.object({
-                limit: z.string(),
-                offset: z.string(),
+                limit: z.number(),
+                offset: z.number(),
             }),
         )
         .query(async ({ c, input }) => {
@@ -93,8 +143,8 @@ export const cakeRouter = router({
                     .select()
                     .from(cakeTable)
                     .orderBy(sql`wins desc`)
-                    .limit(Number(limit))
-                    .offset(Number(offset)),
+                    .limit(limit)
+                    .offset(offset),
             )
             if (error) {
                 throw new HTTPException(400, {
@@ -107,7 +157,7 @@ export const cakeRouter = router({
                 data: {
                     cakes,
                     nextOffset: Number(offset) + Number(limit),
-                    hasMore: cakes?.length ?? 0 === Number(limit),
+                    hasMore: !(cakes!.length < limit),
                 },
             })
         }),
@@ -156,6 +206,7 @@ export const cakeRouter = router({
     createCake: baseProcedure
         .input(
             z.object({
+                ownerAddress: z.string(),
                 name: z.string().min(3),
                 description: z.string().min(1),
                 imageUrl: z.string(),
@@ -172,10 +223,9 @@ export const cakeRouter = router({
         )
         .mutation(async ({ c, input }) => {
             const [createCakeResponse, error] = await handleAsync(
-                db
-                    .insert(cakeTable)
-                    .values(input)
-                    .returning({ id: cakeTable.id }),
+                db.insert(cakeTable).values(input).returning({
+                    id: cakeTable.id,
+                }),
             )
             if (error) {
                 throw new HTTPException(400, {

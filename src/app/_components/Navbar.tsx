@@ -1,9 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { AuthButton } from './AuthButton'
-
-// @TODO: Add functional links once the related pages are added.
-// @TODO: Ensure mobile functionality
+import { MyCakesLink } from './NavbarMyCakes'
 
 export const Navbar = () => {
     return (
@@ -24,6 +22,13 @@ export const Navbar = () => {
                         </div>
                     </Link>
                     <div className="flex items-center space-x-4">
+                        <MyCakesLink />
+                        {/* <Link
+                            href="/create-cake"
+                            className="text-[#261230] hover:text-[#65c3c8]"
+                        >
+                            Create Cake
+                        </Link> */}
                         <Link
                             href="bake-off"
                             className="text-[#261230] hover:text-[#65c3c8]"

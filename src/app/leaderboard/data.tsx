@@ -11,8 +11,8 @@ export const getLeaderboardCakes = async ({
 }) => {
     try {
         const response = await api.cake.getLeaderboardCakes.$get({
-            limit: String(limit),
-            offset: String(offset),
+            limit,
+            offset,
         })
         const {
             data: { cakes, nextOffset, hasMore },

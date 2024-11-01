@@ -61,7 +61,7 @@ const mapZodErrorsToSentences = (errors: z.ZodError): string => {
         case 'ingredients':
             return "Don't forget to add ingredients!"
         case 'recipe':
-            return "Don't forget to add a recipe!"
+            return "Don't forget a recipe of up to 10 steps!"
         default:
             return 'Something went wrong!'
     }
@@ -188,6 +188,7 @@ export const CreateCakePage = () => {
         }
 
         await createCake({
+            address: account?.address!,
             cakeName,
             cakeType,
             cakeDescription,

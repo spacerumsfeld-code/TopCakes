@@ -1,0 +1,1 @@
+ALTER TABLE "cakes" ALTER COLUMN "owner_address" DROP NOT NULL;

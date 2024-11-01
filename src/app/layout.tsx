@@ -6,6 +6,7 @@ import { Footer } from './_components/Footer'
 
 import './globals.css'
 import { Toaster } from '@/ui/components/sonner'
+import { ToastFromParams } from './_components/ToastFromParams'
 
 const inter = Quicksand({ weight: ['500'], subsets: ['latin'] })
 
@@ -21,7 +22,8 @@ export default function RootLayout({
                     <Navbar />
                     {children}
                     <Newsletter />
-                    <Toaster richColors position="top-right" />
+                    <Toaster richColors position="top-center" />
+                    <ToastFromParams />
                     <Footer />
                 </Web3Provider>
             </body>

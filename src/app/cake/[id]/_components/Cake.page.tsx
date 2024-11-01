@@ -51,7 +51,6 @@ export const CakePage = async (props: { params: { id: string } }) => {
                                             <span className="font-semibold">
                                                 Token Standard:
                                             </span>{' '}
-                                            ERC721
                                         </p>
                                         <p>
                                             <span className="font-semibold">
@@ -63,7 +62,8 @@ export const CakePage = async (props: { params: { id: string } }) => {
                                             <span className="font-semibold">
                                                 Owner:
                                             </span>{' '}
-                                            0xxxnm922392302390x0x0x0
+                                            {cake?.ownerAddress ??
+                                                'No owner, cake created before functionality was added'}
                                         </p>
                                     </div>
                                 </CardContent>
