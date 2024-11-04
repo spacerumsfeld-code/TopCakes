@@ -36,3 +36,8 @@ sst-env.d.ts
 
 # Notes
 *.md
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

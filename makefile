@@ -11,6 +11,12 @@ lint-fix:
 typecheck:
 	tsc --noEmit
 
+build:
+	pnpm run build
+
+test-interactive:
+	npx playwright codegen
+
 # Data
 push-db:
 	npx drizzle-kit push
@@ -29,14 +35,10 @@ seed:
 pre-commit-check:
 	pnpm run lint
 	pnpm run typecheck
-	sst dev pnpm run build
+	pnpm run test
 
 test:
 	pnpm run test
 
-build:
-	pnpm run build
-
-# Multiplexer runs; sst links work.
 deploy:
 	sst deploy --stage production

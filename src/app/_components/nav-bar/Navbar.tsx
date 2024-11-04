@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { AuthButton } from './AuthButton'
+import { AuthButton } from '../AuthButton'
 import { MyCakesLink } from './NavbarMyCakes'
 
 export const Navbar = () => {
@@ -30,7 +30,7 @@ export const Navbar = () => {
                             Create Cake
                         </Link> */}
                         <Link
-                            href="bake-off"
+                            href="/bake-off"
                             className="text-[#261230] hover:text-[#65c3c8]"
                         >
                             Bakeoff

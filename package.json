@@ -8,6 +8,7 @@
     "lint-fix": "next lint --fix",
     "typecheck": "tsc --noEmit",
     "build": "next build",
+    "test": "playwright test",
     "db": "drizzle-kit",
     "db:studio": "drizzle-kit studio",
     "preinstall": "npx only-allow pnpm"
@@ -24,6 +25,7 @@
     "@typescript-eslint/parser": "^7.18.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "dotenv": "^16.4.5",
     "drizzle-kit": "^0.23.2",
     "drizzle-orm": "^0.32.2",
     "eslint-config-prettier": "^9.1.0",
@@ -44,6 +46,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^9.1.0",
+    "@playwright/test": "^1.48.2",
     "@types/node": "^20.17.5",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",

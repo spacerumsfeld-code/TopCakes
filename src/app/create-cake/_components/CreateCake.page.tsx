@@ -188,7 +188,7 @@ export const CreateCakePage = () => {
         }
 
         await createCake({
-            address: account?.address!,
+            address: account!.address,
             cakeName,
             cakeType,
             cakeDescription,
