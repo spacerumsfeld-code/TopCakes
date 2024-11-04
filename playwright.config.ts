@@ -43,7 +43,7 @@ export default defineConfig({
         // },
     ],
     webServer: {
-        command: 'npx sst dev',
+        command: 'npx sst dev --mode=basic',
         url: 'http://127.0.0.1:3000',
         reuseExistingServer: !process.env.CI,
     },
