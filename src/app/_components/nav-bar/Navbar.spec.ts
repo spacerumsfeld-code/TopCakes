@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test'
 
 test.beforeEach(async ({ page }) => {
-    await page.goto('/')
+    await page.goto('/', { timeout: 10000 })
 })
 
 test.describe('Navbar', () => {
@@ -35,9 +35,7 @@ test.describe('Navbar', () => {
             page,
         }) => {
             await page.getByRole('link', { name: 'Bakeoff' }).click()
-            await page
-                .getByRole('link', { name: 'TopCak.es Logo TopCak.es' })
-                .click()
+            await page.getByRole('img', { name: 'TopCak.es Logo' }).click()
             await expect(page).toHaveURL('/', { timeout: 10000 })
         })
     })

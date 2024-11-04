@@ -4,7 +4,7 @@ import { defineConfig, devices } from '@playwright/test'
 import * as dotenv from 'dotenv'
 dotenv.config({ path: '.env' })
 
-export default defineConfig({
+const config = defineConfig({
     testDir: './src/app',
     timeout: 30 * 1000,
     fullyParallel: true,
@@ -14,7 +14,7 @@ export default defineConfig({
     reporter: process.env.CI ? 'dot' : 'list',
     maxFailures: process.env.CI ? 1 : 0,
     use: {
-        baseURL: process.env.NEXT_PUBLIC_WEB_URL,
+        baseURL: process.env.WEB_URL!,
         headless: true,
     },
     projects: [
@@ -42,9 +42,12 @@ export default defineConfig({
         //   use: { ...devices['iPhone 12'] },
         // },
     ],
-    webServer: {
-        command: 'npx sst dev --mode=basic',
-        url: 'http://127.0.0.1:3000',
-        reuseExistingServer: !process.env.CI,
-    },
+    webServer: process.env.CI
+        ? undefined
+        : {
+              command: 'npx sst dev --mode=basic & npx sst shell pnpm run dev',
+              reuseExistingServer: true,
+          },
 })
+
+export default config

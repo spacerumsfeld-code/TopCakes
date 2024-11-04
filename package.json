@@ -7,7 +7,7 @@
     "lint": "next lint",
     "lint-fix": "next lint --fix",
     "typecheck": "tsc --noEmit",
-    "build": "next build",
+    "build": "npx sst shell next build",
     "test": "playwright test",
     "db": "drizzle-kit",
     "db:studio": "drizzle-kit studio",

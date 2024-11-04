@@ -50,11 +50,19 @@ jobs:
             - name: Install Playwright browsers
               run: pnpm exec playwright install --with-deps
 
-            - name: Run Playwright tests
-              run: make cicd-test
+            - name: Deploy Code to Test Infrastructure
+              run: cicd-deploy-test-infra
               env:
                   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
                   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+            - name: Run Playwright tests
+              run: make cicd-test
+              env:
+                  WEB_URL: ${{ secrets.WEB_URL }}
+                  CI: true
+                  # https://d2fwjyr2fqumo6.cloudfront.net
+                  # https://ui3dmqn4vi6l3uh5kecj7zgih40gnhug.lambda-url.us-east-1.on.aws/
 
             - uses: actions/upload-artifact@v4
               if: always()

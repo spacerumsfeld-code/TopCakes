@@ -2,11 +2,11 @@
 dev:
 	npx sst dev
 
-# Run make dev in separate pane first for links to work.
+# Run 'make dev' in a separate pane first.
 pre-commit-check:
 	pnpm run lint
 	pnpm run typecheck
-	sst dev pnpm run build
+	pnpm run build
 	pnpm run test
 
 test-interactive:
@@ -33,10 +33,13 @@ cicd-typecheck:
 	pnpm run typecheck
 
 cicd-build:
-	npx sst shell pnpm run build
+	pnpm run build
+
+cicd-deploy-test-infra:
+	npx sst deploy --stage test
 
 cicd-test:
 	pnpm run test
 
 cicd-deploy:
-	sst deploy --stage production
+	npx sst deploy --stage production
