@@ -55,11 +55,12 @@ jobs:
               env:
                   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
                   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                  NEXT_PUBLIC_THIRD_WEB_CLIENT_ID: '7bf5b5455fdf18e5952570297f763964'
 
             - name: Run Playwright tests
               run: make cicd-test
               env:
-                  WEB_URL: ${{ secrets.WEB_URL }}
+                  WEB_URL: 'https://d2fwjyr2fqumo6.cloudfront.net'
                   CI: true
                   # https://d2fwjyr2fqumo6.cloudfront.net
                   # https://ui3dmqn4vi6l3uh5kecj7zgih40gnhug.lambda-url.us-east-1.on.aws/
