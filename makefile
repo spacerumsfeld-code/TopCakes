@@ -30,7 +30,7 @@ cicd-lint:
 	pnpm run lint
 
 cicd-typecheck:
-	npx sst shell pnpm run typecheck --print-logs
+	pnpm run typecheck
 
 cicd-build:
 	npx sst shell pnpm run build
