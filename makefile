@@ -2,17 +2,12 @@
 dev:
 	npx sst dev
 
-lint:
+# Run make dev in separate pane first for links to work.
+pre-commit-check:
 	pnpm run lint
-
-lint-fix:
-	pnpm run lint-fix
-
-typecheck:
 	pnpm run typecheck
-
-build:
-	pnpm run build
+	sst dev pnpm run build
+	pnpm run test
 
 test-interactive:
 	npx playwright codegen
@@ -31,14 +26,17 @@ seed:
 	DATABASE_URL=[changeme] npx tsx ops/seed.ts
 
 # CICD
-# Need to run make dev in separate pane for links to work.
-pre-commit-check:
+cicd-lint:
 	pnpm run lint
-	pnpm run typecheck
+
+cicd-typecheck:
+	npx sst shell pnpm run typecheck
+
+cicd-build:
+	npx sst shell pnpm run build
+
+cicd-test:
 	pnpm run test
 
-test:
-	pnpm run test
-
-deploy:
+cicd-deploy:
 	sst deploy --stage production
