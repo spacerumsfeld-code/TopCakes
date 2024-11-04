@@ -1,6 +1,6 @@
 # Development
 dev:
-	sst dev
+	npx sst dev
 
 lint:
 	pnpm run lint
@@ -9,7 +9,7 @@ lint-fix:
 	pnpm run lint-fix
 
 typecheck:
-	tsc --noEmit
+	pnpm run typecheck
 
 build:
 	pnpm run build
