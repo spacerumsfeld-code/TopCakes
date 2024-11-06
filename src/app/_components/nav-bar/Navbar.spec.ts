@@ -42,16 +42,3 @@ test.describe('Navbar', () => {
 
     test.describe('Authentication', () => {})
 })
-
-//     await page.getByRole('link', { name: 'Start Baking' }).click()
-//     await page.getByRole('button', { name: 'Start Creating' }).click()
-//     await page.goto('http://localhost:3000/create-cake')
-//     await page.getByRole('link', { name: 'TopCak.es Logo TopCak.es' }).click()
-//     await page.getByRole('link', { name: 'View Leaderboard' }).click()
-//     await page.getByRole('link', { name: 'TopCak.es Logo TopCak.es' }).click()
-//     await page.getByRole('link', { name: 'Explore Bakery' }).click()
-//     await page.getByRole('link', { name: 'TopCak.es Logo TopCak.es' }).click()
-//     await page
-//         .getByRole('link', { name: 'TopCak.es Logo TopCak.es' })
-//         .press('CapsLock')
-// })

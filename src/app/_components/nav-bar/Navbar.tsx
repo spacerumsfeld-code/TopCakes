@@ -23,12 +23,12 @@ export const Navbar = () => {
                     </Link>
                     <div className="flex items-center space-x-4">
                         <MyCakesLink />
-                        {/* <Link
+                        <Link
                             href="/create-cake"
                             className="text-[#261230] hover:text-[#65c3c8]"
                         >
                             Create Cake
-                        </Link> */}
+                        </Link>
                         <Link
                             href="/bake-off"
                             className="text-[#261230] hover:text-[#65c3c8]"
@@ -47,8 +47,8 @@ export const Navbar = () => {
                         >
                             Bakery
                         </Link>
-                        <AuthButton />
                     </div>
+                    <AuthButton />
                 </nav>
             </div>
         </header>

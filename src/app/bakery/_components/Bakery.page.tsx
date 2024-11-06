@@ -26,7 +26,7 @@ export const BakeryPage = ({
     return (
         <>
             <BakeryHeader />
-            <div className="min-h-screen bg-[#faf7f5]">
+            <div className="min-h-screen">
                 <main>
                     <section className="py-10 bg-white">
                         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
