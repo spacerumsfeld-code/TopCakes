@@ -27,8 +27,19 @@ test.describe('Navbar', () => {
         test('Should be able to navigate to the Bake-Off page', async ({
             page,
         }) => {
-            await page.getByRole('link', { name: 'Bakeoff' }).click()
+            await page
+                .getByRole('link', { name: 'Bakeoff', exact: true })
+                .click()
             await expect(page).toHaveURL('/bake-off', { timeout: 10000 })
+        })
+
+        test('Should be able to navigate to the Create Cake page', async ({
+            page,
+        }) => {
+            await page
+                .getByRole('link', { name: 'Create Cake', exact: true })
+                .click()
+            await expect(page).toHaveURL('/create-cake', { timeout: 10000 })
         })
 
         test('Should be able to navigate back to the home page from any other page', async ({
@@ -39,6 +50,4 @@ test.describe('Navbar', () => {
             await expect(page).toHaveURL('/', { timeout: 10000 })
         })
     })
-
-    test.describe('Authentication', () => {})
 })

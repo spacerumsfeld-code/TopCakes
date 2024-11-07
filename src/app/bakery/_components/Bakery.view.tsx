@@ -27,7 +27,7 @@ export const BakeryView = (props: {
 
     return (
         <>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {props.cakes.map((cake, index) => (
                     <Link href={`/cake/${cake.id}`} key={cake.id}>
                         <Card className="bg-white shadow-xl transition-all duration-300 hover:shadow-2xl hover:scale-105 cursor-pointer">
@@ -42,11 +42,20 @@ export const BakeryView = (props: {
                                 <h3 className="text-lg font-semibold text-[#261230] mb-2 truncate w-full">
                                     {cake.name}
                                 </h3>
+                                <h3
+                                    data-testid="cake-type"
+                                    className="text-sm text-gray-600 mb-4 line-clamp"
+                                >
+                                    {cake.type}
+                                </h3>
                                 <p className="text-sm text-gray-600 mb-4 line-clamp">
                                     {cake.description}
                                 </p>
                                 <div className="flex justify-between items-center">
-                                    <span className="text-[#65c3c8]">
+                                    <span
+                                        data-testid="cake-wins"
+                                        className="text-[#65c3c8]"
+                                    >
                                         Wins: {cake.wins}
                                     </span>
                                 </div>

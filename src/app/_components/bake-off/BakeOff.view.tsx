@@ -54,7 +54,10 @@ export const BakeOffView = ({ cakes: initialCakes }: { cakes: Cake[] }) => {
                                         alt={leftCake.name}
                                         className="w-full h-48 object-cover rounded-lg mb-4"
                                     />
-                                    <h3 className="text-lg font-semibold text-[#261230] mb-2 truncate w-full">
+                                    <h3
+                                        id="test-cake-name-left"
+                                        className="text-lg font-semibold text-[#261230] mb-2 truncate w-full"
+                                    >
                                         {leftCake.name}
                                     </h3>
                                     <CakeModal cake={leftCake}>
@@ -113,7 +116,10 @@ export const BakeOffView = ({ cakes: initialCakes }: { cakes: Cake[] }) => {
                                         alt={rightCake.name}
                                         className="w-full h-48 object-cover rounded-lg mb-4"
                                     />
-                                    <h3 className="text-lg font-semibold text-[#261230] mb-2 truncate w-full">
+                                    <h3
+                                        id="test-cake-name-right"
+                                        className="text-lg font-semibold text-[#261230] mb-2 truncate w-full"
+                                    >
                                         {rightCake.name}
                                     </h3>
                                     <CakeModal cake={rightCake}>

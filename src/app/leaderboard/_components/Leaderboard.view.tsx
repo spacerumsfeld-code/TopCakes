@@ -14,6 +14,7 @@ import { useState } from 'react'
 import { getLeaderboardCakes } from '../data'
 import useLoading from '@/hooks/useLoading.hook'
 import useIntersectionObserver from '@/hooks/useIntersectionObserver.hook'
+import { useRouter } from 'next/navigation'
 
 export const LeaderboardView = (props: {
     cakes: Cake[]
@@ -27,6 +28,8 @@ export const LeaderboardView = (props: {
     const { isLoading, startLoading, stopLoading } = useLoading()
 
     // @Interactivity
+    const router = useRouter()
+
     const { ref } = useIntersectionObserver({
         triggerOnce: false,
         shouldUpdate: Boolean(localHasMore && !isLoading('leaderboardCakes')),
@@ -71,7 +74,14 @@ export const LeaderboardView = (props: {
                             </TableHeader>
                             <TableBody>
                                 {localCakes.map((cake, index) => (
-                                    <TableRow key={cake.id}>
+                                    <TableRow
+                                        id="test-leaderboard-row"
+                                        key={cake.id}
+                                        className="cursor-pointer"
+                                        onClick={() =>
+                                            router.push(`/cake/${cake.id}`)
+                                        }
+                                    >
                                         <TableCell className="font-medium">
                                             <div className="flex items-center">
                                                 <span className="mr-2">

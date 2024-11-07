@@ -13,7 +13,7 @@ export const JoinNowCTA = () => {
                     to earn royalties!
                 </p>
                 <Link
-                    href="/"
+                    href="/create-cake"
                     className={cn(
                         tempLinkAsButtonClassName,
                         'bg-[#65c3c8] hover:bg-[#42b2b8] text-white',

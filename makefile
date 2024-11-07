@@ -9,6 +9,9 @@ pre-commit-check:
 	pnpm run build
 	pnpm run test
 
+test-ui:
+	npx playwright test --ui
+
 test-interactive:
 	npx playwright codegen
 

@@ -59,7 +59,10 @@ export function CakeModal({
                                 <UtensilsCrossed className="mr-2 text-[#65c3c8] h-5 w-5" />
                                 <span className="font-semibold">Recipe</span>
                             </div>
-                            <ol className="list-decimal list-inside space-y-2">
+                            <ol
+                                id="test-cake-modal-recipe"
+                                className="list-decimal list-inside space-y-2"
+                            >
                                 {cake.recipe.map((step, index) => (
                                     <li key={index} className="text-[#261230]">
                                         {step}
