@@ -1,7 +1,7 @@
 import { Quicksand } from 'next/font/google'
 import { Web3Provider } from '@/providers/Web3.provider'
 import { Navbar } from './_components/nav-bar/Navbar'
-import { Newsletter } from './_components/Newsletter'
+import { Newsletter } from './_components/newsletter/Newsletter'
 import { Footer } from './_components/Footer'
 
 import './globals.css'
