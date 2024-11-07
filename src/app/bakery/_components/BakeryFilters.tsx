@@ -29,11 +29,9 @@ export const BakeryFilters = (props: {
 
     // @Render
     return (
-        <div className="flex flex-col md:flex-row justify-between items-center mb-8">
-            <div className="flex space-x-4 mb-4 md:mb-0">
-                <div className="flex items-center">
-                    <ArrowDownWideNarrow className="h-4 w-4" />
-                </div>
+        <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mb-8">
+            <div className="flex items-center gap-4">
+                <ArrowDownWideNarrow className="h-4 w-4" />
                 <Select
                     onValueChange={(value) =>
                         handleSortChange(value as CakeSort)
@@ -51,9 +49,9 @@ export const BakeryFilters = (props: {
                         ))}
                     </SelectContent>
                 </Select>
-                <div className="flex items-center">
-                    <Sliders className="h-4 w-4" />
-                </div>
+            </div>
+            <div className="flex items-center gap-4">
+                <Sliders className="h-4 w-4" />
                 <Select
                     onValueChange={(value) =>
                         handleFilterChange(value as CakeFilter)

@@ -21,7 +21,7 @@ export const SampleCakes = () => {
                         href="/bakery"
                         className={cn(
                             tempLinkAsButtonClassName,
-                            'bg-[#65c3c8] hover:bg-[#42b2b8] text-white',
+                            'bg-[#ef9fbc] hover:bg-[#e7739e]  text-white',
                         )}
                     >
                         Explore Bakery

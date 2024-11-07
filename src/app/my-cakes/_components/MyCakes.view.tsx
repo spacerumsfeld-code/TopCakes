@@ -49,6 +49,12 @@ export const MyCakesView = (
                                 <h3 className="text-lg font-semibold text-[#261230] mb-2 truncate w-full">
                                     {cake.name}
                                 </h3>
+                                <h3
+                                    data-testid="cake-type"
+                                    className="text-sm text-gray-600 mb-4 line-clamp"
+                                >
+                                    {cake.type}
+                                </h3>
                                 <p className="text-sm text-gray-600 mb-4 line-clamp">
                                     {cake.description}
                                 </p>

@@ -67,9 +67,9 @@ export const LeaderboardView = (props: {
                                     <TableHead className="text-right">
                                         Wins
                                     </TableHead>
-                                    <TableHead className="text-right">
+                                    {/* <TableHead className="text-right">
                                         Price (ETH)
-                                    </TableHead>
+                                    </TableHead> */}
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
@@ -105,9 +105,9 @@ export const LeaderboardView = (props: {
                                         <TableCell className="text-right">
                                             {cake.wins}
                                         </TableCell>
-                                        <TableCell className="text-right">
+                                        {/* <TableCell className="text-right">
                                             Placeholder
-                                        </TableCell>
+                                        </TableCell> */}
                                     </TableRow>
                                 ))}
                             </TableBody>
