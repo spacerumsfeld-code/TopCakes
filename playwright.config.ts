@@ -7,12 +7,11 @@ dotenv.config({ path: '.env' })
 const config = defineConfig({
     testDir: './src/app',
     timeout: 30 * 1000,
-    // until we up our AWS lambda concurrency
     fullyParallel: false,
     forbidOnly: Boolean(process.env.CI),
     retries: process.env.CI ? 1 : 0,
-    workers: '50%',
-    // workers: 1,
+    // workers: '50%',
+    workers: 1,
     reporter: process.env.CI ? 'dot' : 'list',
     maxFailures: process.env.CI ? 1 : 0,
     use: {
