@@ -1,5 +1,6 @@
 import { db } from '../src/clients/db.client'
-import { cakes, CakeType } from '../src/domain'
+import { cakes } from '../src/domain/cake/cake.sql'
+import { CakeType } from '../src/domain/cake/cake.models'
 import { faker } from '@faker-js/faker'
 // import axios from 'axios'
 

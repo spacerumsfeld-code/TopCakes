@@ -9,8 +9,8 @@ import {
     pgEnum,
     timestamp,
 } from 'drizzle-orm/pg-core'
-import { CakeType } from './cake'
-import { cakesToBattles } from './'
+import { cakesToBattles } from '../battle/cake-battle.sql'
+import { CakeType } from './cake.models'
 
 export const cakeTypeEnum = pgEnum(
     'type',

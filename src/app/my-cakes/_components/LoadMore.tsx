@@ -1,10 +1,11 @@
-import { CakeFilter, CakeSort } from '@/domain/cake'
+import { Cake } from '@/domain/cake'
 import { useSearchParams } from 'next/navigation'
 import { useActiveAccount } from 'thirdweb/react'
 import { getCakesByAddress } from '../data'
 import { useState } from 'react'
 import { MyCakesView } from './MyCakes.view'
 import { Button } from '@/ui/components/button'
+import { CakeFilter, CakeSort } from '@/domain/cake/cake.models'
 
 export const LoadMore = (props: { nextOffset: number }) => {
     // @State

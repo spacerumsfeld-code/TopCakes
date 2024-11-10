@@ -1,7 +1,7 @@
 'use server'
 
 import { client as api } from '@/clients/api.client'
-import { CakeFilter, CakeSort } from '@/domain/cake'
+import { CakeFilter, CakeSort } from '@/domain/cake/cake.models'
 
 export const getCakesByAddress = async ({
     address,

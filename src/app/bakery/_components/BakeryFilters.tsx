@@ -1,6 +1,5 @@
 'use client'
 
-import { CakeFilter, CakeFilterReverseMapping, CakeSort } from '@/domain/cake'
 import {
     Select,
     SelectContent,
@@ -10,6 +9,11 @@ import {
 } from '@/ui/components/select'
 import { useRouter } from 'next/navigation'
 import { ArrowDownWideNarrow, Sliders } from 'lucide-react'
+import {
+    CakeFilter,
+    CakeSort,
+    CakeFilterReverseMapping,
+} from '@/domain/cake/cake.models'
 
 export const BakeryFilters = (props: {
     activeFilter: CakeFilter

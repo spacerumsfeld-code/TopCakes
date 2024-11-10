@@ -1,12 +1,10 @@
-import { db } from '@/clients/db.client'
-import { cakes, battles, cakesToBattles } from '@/domain'
-import { eq } from 'drizzle-orm'
-import { sql } from 'drizzle-orm'
 import { z } from 'zod'
 import { defer, handleAsync, handleDeferredTasks } from '@/lib/async'
 import { router } from '../_internals/router'
 import { baseProcedure } from '../_internals'
 import { HTTPException } from 'hono/http-exception'
+import { Battle } from '@/domain/battle'
+import { Cake } from '@/domain/cake'
 
 export const battleRouter = router({
     create: baseProcedure
@@ -21,14 +19,11 @@ export const battleRouter = router({
             const { cake1Id, cake2Id, winnerId } = input
 
             const [newBattle, error] = await handleAsync(
-                db
-                    .insert(battles)
-                    .values({
-                        cake1Id,
-                        cake2Id,
-                        winnerId,
-                    })
-                    .returning({ id: battles.id }),
+                Battle.create({
+                    cake1Id,
+                    cake2Id,
+                    winnerId,
+                }),
             )
             if (error) {
                 throw new HTTPException(400, {
@@ -38,20 +33,9 @@ export const battleRouter = router({
             }
 
             defer([
-                db
-                    .update(cakes)
-                    .set({
-                        wins: sql`wins + 1`,
-                    })
-                    .where(eq(cakes.id, cake1Id)),
-                db.insert(cakesToBattles).values({
-                    cakeId: cake1Id,
-                    battleId: newBattle![0].id,
-                }),
-                db.insert(cakesToBattles).values({
-                    cakeId: cake2Id,
-                    battleId: newBattle![0].id,
-                }),
+                Cake.updateWinnerCake(winnerId),
+                Battle.mapBattleToCake(cake1Id, newBattle![0].id),
+                Battle.mapBattleToCake(cake2Id, newBattle![0].id),
             ])
 
             await handleDeferredTasks()

@@ -1,11 +1,12 @@
 'use client'
 
-import { CakeFilter, CakeSort } from '@/domain/cake'
+import { Cake } from '@/domain/cake'
 import { Button } from '@/ui/components/button'
 import { useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 import { getBakeryCakes } from '../data'
 import { Loader2 } from 'lucide-react'
+import { CakeFilter, CakeSort } from '@/domain/cake/cake.models'
 
 export const LoadMore = (props: { nextOffset: number }) => {
     // @State

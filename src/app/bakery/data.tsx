@@ -2,7 +2,7 @@
 
 import { client as api } from '@/clients/api.client'
 import { BakeryView } from './_components/Bakery.view'
-import { CakeFilter, CakeSort } from '@/domain/cake'
+import { CakeFilter, CakeSort } from '@/domain/cake/cake.models'
 
 export const getBakeryCakes = async (args: {
     limit: number

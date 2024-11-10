@@ -1,7 +1,8 @@
 'use server'
 
 import { client as api } from '@/clients/api.client'
-import { CakeType } from '@/domain'
+import { Cake } from '@/domain/cake'
+import { CakeType } from '@/domain/cake/cake.models'
 import { redirect } from 'next/navigation'
 
 export const createCake = async ({

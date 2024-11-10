@@ -3,11 +3,11 @@
 import { Suspense, useEffect, useState } from 'react'
 import { useActiveAccount } from 'thirdweb/react'
 import { getCakesByAddress } from '../data'
-import { Cake, CakeFilter, CakeSort } from '@/domain/cake'
 import { MyCakesSkeleton } from './MyCakes.skeleton'
 import { MyCakesView } from './MyCakes.view'
 import { MyCakesHeader } from './MyCakesHeader'
 import { BakeryFilters } from '@/app/bakery/_components/BakeryFilters'
+import { type Cake, CakeFilter, CakeSort } from '@/domain/cake/cake.models'
 
 // @TODO: I dont like this pattern one bit. Lets see if we can find an alternative.
 

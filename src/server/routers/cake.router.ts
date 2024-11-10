@@ -1,12 +1,10 @@
-import { db } from '@/clients/db.client'
-import { cakes as cakeTable, CakeType } from '@/domain'
-import { sql, eq, and } from 'drizzle-orm'
 import { z } from 'zod'
 import { router } from '../_internals/router'
 import { baseProcedure } from '../_internals'
 import { HTTPException } from 'hono/http-exception'
 import { handleAsync } from '@/lib'
-import { CakeFilter, CakeSort } from '@/domain/cake'
+import { Cake } from '@/domain/cake'
+import { CakeType, CakeFilter, CakeSort } from '@/domain/cake/cake.models'
 
 export const cakeRouter = router({
     getCakeById: baseProcedure
@@ -18,12 +16,8 @@ export const cakeRouter = router({
         .query(async ({ c, input }) => {
             const { id } = input
 
-            const [cakes, error] = await handleAsync(
-                db
-                    .select()
-                    .from(cakeTable)
-                    .where(eq(cakeTable.id, Number(id)))
-                    .limit(1),
+            const [cake, error] = await handleAsync(
+                Cake.getCakeById(Number(id)),
             )
             if (error) {
                 throw new HTTPException(400, {
@@ -33,7 +27,7 @@ export const cakeRouter = router({
             }
 
             return c.superjson({
-                data: { cake: cakes![0] },
+                data: { cake },
             })
         }),
     getCakesByAddress: baseProcedure
@@ -49,28 +43,15 @@ export const cakeRouter = router({
         .query(async ({ c, input }) => {
             const { limit, offset, filter, sort, address } = input
 
-            const orderBy =
-                sort === CakeSort.Wins ? sql`wins desc` : sql`created_at desc`
-
-            const query = db
-                .select()
-                .from(cakeTable)
-                .orderBy(orderBy)
-                .limit(limit)
-                .offset(offset)
-
-            if (filter !== CakeFilter.None) {
-                query.where(
-                    and(
-                        eq(cakeTable.type, filter as unknown as CakeType),
-                        eq(cakeTable.ownerAddress, address),
-                    ),
-                )
-            } else {
-                query.where(eq(cakeTable.ownerAddress, address))
-            }
-
-            const [getCakesByAddressResponse, error] = await handleAsync(query)
+            const [getCakesByAddressResponse, error] = await handleAsync(
+                Cake.getCakesByAddress({
+                    address,
+                    limit,
+                    offset,
+                    filter,
+                    sort,
+                }),
+            )
             if (error) {
                 throw new HTTPException(400, {
                     message: error.message,
@@ -81,23 +62,13 @@ export const cakeRouter = router({
             return c.superjson({
                 data: {
                     cakes: getCakesByAddressResponse,
-                    nextOffset: Number(offset) + Number(limit),
+                    nextOffset: offset + limit,
                     hasMore: !(getCakesByAddressResponse!.length < limit),
                 },
             })
         }),
     getSampleCakes: baseProcedure.query(async ({ c }) => {
-        const [cakes, error] = await handleAsync(
-            db
-                .select({
-                    id: cakeTable.id,
-                    name: cakeTable.name,
-                    image_url: cakeTable.imageUrl,
-                })
-                .from(cakeTable)
-                .orderBy(sql`random()`)
-                .limit(4),
-        )
+        const [cakes, error] = await handleAsync(Cake.getSampleCakes())
         if (error) {
             throw new HTTPException(400, {
                 message: (error as Error).message,
@@ -110,13 +81,7 @@ export const cakeRouter = router({
         })
     }),
     getBakeOffCakes: baseProcedure.query(async ({ c }) => {
-        const [cakes, error] = await handleAsync(
-            db
-                .select()
-                .from(cakeTable)
-                .orderBy(sql`random()`)
-                .limit(2),
-        )
+        const [cakes, error] = await handleAsync(Cake.getBakeOffCakes())
         if (error) {
             throw new HTTPException(400, {
                 message: (error as Error).message,
@@ -139,12 +104,10 @@ export const cakeRouter = router({
             const { limit, offset } = input
 
             const [cakes, error] = await handleAsync(
-                db
-                    .select()
-                    .from(cakeTable)
-                    .orderBy(sql`wins desc`)
-                    .limit(limit)
-                    .offset(offset),
+                Cake.getLeaderboardCakes({
+                    limit,
+                    offset,
+                }),
             )
             if (error) {
                 throw new HTTPException(400, {
@@ -173,21 +136,14 @@ export const cakeRouter = router({
         .query(async ({ c, input }) => {
             const { limit, offset, filter, sort } = input
 
-            const orderBy =
-                sort === CakeSort.Wins ? sql`wins desc` : sql`created_at desc`
-
-            const query = db
-                .select()
-                .from(cakeTable)
-                .orderBy(orderBy)
-                .limit(Number(limit))
-                .offset(Number(offset))
-
-            if (filter !== CakeFilter.None) {
-                query.where(eq(cakeTable.type, filter as unknown as CakeType))
-            }
-
-            const [getBakeryCakesResponse, error] = await handleAsync(query)
+            const [getBakeryCakesResponse, error] = await handleAsync(
+                Cake.getBakeryCakes({
+                    limit,
+                    offset,
+                    filter,
+                    sort,
+                }),
+            )
             if (error) {
                 throw new HTTPException(400, {
                     message: error.message,
@@ -198,7 +154,7 @@ export const cakeRouter = router({
             return c.superjson({
                 data: {
                     cakes: getBakeryCakesResponse,
-                    nextOffset: Number(offset) + Number(limit),
+                    nextOffset: offset + limit,
                     hasMore: !(getBakeryCakesResponse!.length < limit),
                 },
             })
@@ -223,9 +179,7 @@ export const cakeRouter = router({
         )
         .mutation(async ({ c, input }) => {
             const [createCakeResponse, error] = await handleAsync(
-                db.insert(cakeTable).values(input).returning({
-                    id: cakeTable.id,
-                }),
+                Cake.create(input),
             )
             if (error) {
                 throw new HTTPException(400, {

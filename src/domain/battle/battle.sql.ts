@@ -1,5 +1,6 @@
 import { pgTable, integer, serial } from 'drizzle-orm/pg-core'
-import { cakes, cakesToBattles } from './'
+import { cakes } from '../cake/cake.sql'
+import { cakesToBattles } from './cake-battle.sql'
 import { relations } from 'drizzle-orm'
 
 export const battles = pgTable('battles', {

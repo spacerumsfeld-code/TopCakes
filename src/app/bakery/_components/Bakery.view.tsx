@@ -3,10 +3,10 @@ import { Card, CardContent } from '@/ui/components/card'
 import { ShoppingBag } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Cake } from '@/domain/cake'
 import { cn } from '@/lib'
 import { LoadMore } from './LoadMore'
 import { BakeryEmptyState } from './Bakery.empty'
+import { type Cake } from '@/domain/cake/cake.models'
 
 const getButtonColor = (index: number) => {
     const colors = [

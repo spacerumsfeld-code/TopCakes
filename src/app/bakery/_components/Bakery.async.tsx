@@ -1,5 +1,5 @@
-import { CakeFilter, CakeSort } from '@/domain/cake'
 import { getBakeryCakes } from '../data'
+import { CakeFilter, CakeSort } from '@/domain/cake/cake.models'
 
 export const BakeryAsync = async (props: {
     args: {

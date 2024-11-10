@@ -11,7 +11,7 @@ export const getCakeById = async (id: number) => {
             data: { cake },
         } = await response.json()
 
-        return { cake }
+        return { cake: cake! }
     } catch (error) {
         throw new Error(`error in client.getCakeById: ${JSON.stringify(error)}`)
     }

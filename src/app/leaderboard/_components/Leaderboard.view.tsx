@@ -9,12 +9,12 @@ import {
     TableRow,
 } from '@/ui/components/table'
 import { Trophy } from 'lucide-react'
-import { Cake } from '@/domain/cake'
 import { useState } from 'react'
 import { getLeaderboardCakes } from '../data'
 import useLoading from '@/hooks/useLoading.hook'
 import useIntersectionObserver from '@/hooks/useIntersectionObserver.hook'
 import { useRouter } from 'next/navigation'
+import { Cake } from '@/domain/cake/cake.models'
 
 export const LeaderboardView = (props: {
     cakes: Cake[]

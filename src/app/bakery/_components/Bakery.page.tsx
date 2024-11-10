@@ -2,8 +2,8 @@ import { Suspense } from 'react'
 import { BakeryAsync } from './Bakery.async'
 import { BakeryHeader } from './BakeryHeader'
 import { BakerySkeleton } from './Bakery.skeleton'
-import { CakeFilter, CakeSort } from '@/domain/cake'
 import { BakeryFilters } from './BakeryFilters'
+import { CakeFilter, CakeSort } from '@/domain/cake/cake.models'
 
 export const BakeryPage = ({
     searchParams,
