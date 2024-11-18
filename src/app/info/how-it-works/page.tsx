@@ -1,3 +1,3 @@
-export default function HowItWorksPage() {
-    return <div className="min-h-screen">How It Works</div>
-}
+import { HowItWorksPage } from './_components/HowItWorks.page'
+
+export default HowItWorksPage

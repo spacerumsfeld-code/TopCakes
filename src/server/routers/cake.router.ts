@@ -159,6 +159,92 @@ export const cakeRouter = router({
                 },
             })
         }),
+    getFavoriteCakes: baseProcedure
+        .input(
+            z.object({
+                address: z.string(),
+                limit: z.number(),
+                offset: z.number(),
+                filter: z.nativeEnum(CakeFilter),
+                sort: z.nativeEnum(CakeSort),
+            }),
+        )
+        .query(async ({ c, input }) => {
+            const { limit, offset, filter, sort, address } = input
+
+            const [getFavoriteCakesResponse, error] = await handleAsync(
+                Cake.getFavoriteCakes({
+                    address,
+                    limit,
+                    offset,
+                    filter,
+                    sort,
+                }),
+            )
+            if (error) {
+                throw new HTTPException(400, {
+                    message: error.message,
+                    cause: (error as Error).cause,
+                })
+            }
+
+            return c.superjson({
+                data: {
+                    cakes: getFavoriteCakesResponse,
+                    nextOffset: offset + limit,
+                    hasMore: !(getFavoriteCakesResponse!.length < limit),
+                },
+            })
+        }),
+    toggleCakeFavorite: baseProcedure
+        .input(
+            z.object({
+                address: z.string(),
+                cakeId: z.number(),
+            }),
+        )
+        .mutation(async ({ c, input }) => {
+            const { address, cakeId } = input
+
+            const [getFavoriteCakeResponse, error] = await handleAsync(
+                Cake.getFavoriteCake(address, cakeId),
+            )
+            if (error) {
+                throw new HTTPException(400, {
+                    message: error.message,
+                    cause: (error as Error).cause,
+                })
+            }
+
+            const alreadyFavorited = Boolean(getFavoriteCakeResponse)
+            if (alreadyFavorited) {
+                const [_, error] = await handleAsync(
+                    Cake.removeCakeFromFavorites(cakeId, address),
+                )
+                if (error) {
+                    throw new HTTPException(400, {
+                        message: error.message,
+                        cause: (error as Error).cause,
+                    })
+                }
+            } else {
+                const [_, error] = await handleAsync(
+                    Cake.addCakeToFavorites(address, cakeId),
+                )
+                if (error) {
+                    throw new HTTPException(400, {
+                        message: error.message,
+                        cause: (error as Error).cause,
+                    })
+                }
+            }
+
+            return c.superjson({
+                data: {
+                    success: !alreadyFavorited,
+                },
+            })
+        }),
     createCake: baseProcedure
         .input(
             z.object({
@@ -191,6 +277,30 @@ export const cakeRouter = router({
             return c.superjson({
                 data: {
                     id: createCakeResponse![0].id,
+                    success: true,
+                },
+            })
+        }),
+    likeCake: baseProcedure
+        .input(
+            z.object({
+                cakeId: z.number(),
+            }),
+        )
+        .mutation(async ({ c, input }) => {
+            const { cakeId } = input
+
+            const [_, error] = await handleAsync(Cake.likeCake(cakeId))
+            if (error) {
+                throw new HTTPException(400, {
+                    message: 'Error creating cake',
+                    cause: (error as Error).cause,
+                })
+            }
+
+            return c.superjson({
+                data: {
+                    id: cakeId,
                     success: true,
                 },
             })

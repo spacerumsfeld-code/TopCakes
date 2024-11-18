@@ -5,6 +5,7 @@ import { lightTheme } from 'thirdweb/react'
 import { createWallet, inAppWallet } from 'thirdweb/wallets'
 import { web3Client } from '@/clients/web3.client'
 import { sepolia, ethereum } from 'thirdweb/chains'
+import { generatePayload, isLoggedIn, login, logout } from './data'
 
 export const wallets = [
     inAppWallet({
@@ -45,6 +46,19 @@ export const AuthButton = () => {
             connectModal={{
                 size: 'compact',
                 showThirdwebBranding: false,
+            }}
+            auth={{
+                isLoggedIn: async () => {
+                    return await isLoggedIn()
+                },
+                doLogin: async (params) => {
+                    await login(params)
+                },
+                getLoginPayload: async ({ address }) =>
+                    generatePayload({ address }),
+                doLogout: async () => {
+                    await logout()
+                },
             }}
         />
     )

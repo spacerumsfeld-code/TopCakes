@@ -8,7 +8,7 @@ export const LandingHeader = () => {
                 Welcome to TopCak.es
             </h1>
             <p className="text-xl text-[#261230] mb-8">
-                Create, Battle, and Share Delicious Cake Creations!
+                Create, Battle, and Share Delicious Cakes!
             </p>
             <Link
                 href="/info/how-it-works"

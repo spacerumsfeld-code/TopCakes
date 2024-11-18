@@ -5,8 +5,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { cn } from '@/lib'
 import { LoadMore } from './LoadMore'
-import { BakeryEmptyState } from './Bakery.empty'
-import { type Cake } from '@/domain/cake/cake.models'
+import { CakeGridEmptyState } from '../../_components/cake-grid/CakeGrid.empty'
+import { CakeGridPage, type Cake } from '@/domain/cake/cake.models'
 
 const getButtonColor = (index: number) => {
     const colors = [
@@ -18,12 +18,13 @@ const getButtonColor = (index: number) => {
     return colors[index % colors.length]
 }
 
-export const BakeryView = (props: {
+export const CakeGridView = (props: {
+    page: CakeGridPage
     cakes: Cake[]
     nextOffset: number
     hasMore: boolean
 }) => {
-    if (!props.cakes.length) return <BakeryEmptyState />
+    if (!props.cakes.length) return <CakeGridEmptyState />
 
     return (
         <>
@@ -73,7 +74,9 @@ export const BakeryView = (props: {
                     </Link>
                 ))}
             </div>
-            {props.hasMore && <LoadMore nextOffset={props.nextOffset} />}
+            {props.hasMore && (
+                <LoadMore nextOffset={props.nextOffset} page={props.page} />
+            )}
         </>
     )
 }

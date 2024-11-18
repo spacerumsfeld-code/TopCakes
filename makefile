@@ -2,15 +2,13 @@
 dev:
 	npx sst dev
 
-# Run 'make dev' in a separate pane first.
 pre-commit-check:
 	pnpm run lint
 	pnpm run typecheck
 	pnpm run build
-	pnpm run test
 
 test-ui:
-	npx playwright test --ui
+	npx sst shell playwright test --ui
 
 test-interactive:
 	npx playwright codegen
@@ -41,6 +39,7 @@ cicd-build:
 cicd-deploy-test-infra:
 	npx sst deploy --stage test
 
+# Run 'make dev' in a separate pane first for local runs.
 cicd-test:
 	pnpm run test
 

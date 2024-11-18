@@ -7,6 +7,13 @@ export interface Cake {
     ingredients: { name: string; quantity: number; unit: string }[]
     description: string
     wins: number
+    likes: number
+}
+
+export enum CakeGridPage {
+    MyCakes = 'My Cakes',
+    Favorites = 'Favorites',
+    Bakery = 'Bakery',
 }
 
 export enum CakeType {

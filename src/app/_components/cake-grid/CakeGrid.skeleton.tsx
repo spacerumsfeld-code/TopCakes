@@ -1,7 +1,7 @@
 import { Card, CardContent } from '@/ui/components/card'
 import { Skeleton } from '@/ui/components/skeleton'
 
-const BakeryGridSkeleton = ({ count = 28 }: { count?: number }) => {
+const CakeGridBlockSkeleton = ({ count = 28 }: { count?: number }) => {
     return (
         <section className="py-10 bg-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -29,10 +29,10 @@ const BakeryGridSkeleton = ({ count = 28 }: { count?: number }) => {
     )
 }
 
-export const BakerySkeleton = () => {
+export const CakeGridSkeleton = () => {
     return (
         <main>
-            <BakeryGridSkeleton />
+            <CakeGridBlockSkeleton />
         </main>
     )
 }

@@ -25,11 +25,6 @@ export const Footer = () => {
                             </li>
                             <li>
                                 <a href="#" className="hover:text-[#65c3c8]">
-                                    FAQ
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" className="hover:text-[#65c3c8]">
                                     Terms of Service
                                 </a>
                             </li>

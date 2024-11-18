@@ -25,13 +25,12 @@ export const Showcase = () => {
                             Share Your Delicious Creations
                         </h3>
                         <p className="text-lg text-gray-700 mb-6">
-                            Upload your most mouthwatering cake photos or
-                            cherished recipes. Join our community of passionate
-                            bakers and cake enthusiasts!
+                            Share your recipes and most mouthwatering cakes Join
+                            our community of passionate bakers and cake
+                            enthusiasts!
                         </p>
                         <ul className="space-y-4 mb-8">
                             {[
-                                'Easy creation process',
                                 'Showcase your baking skills',
                                 'Engage with fellow cake lovers',
                                 'Earn royalties on your creations',

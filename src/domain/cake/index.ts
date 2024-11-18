@@ -2,6 +2,7 @@ import { db } from '@/clients/db.client'
 import { cakes as cakeTable } from './cake.sql'
 import { eq, sql, and } from 'drizzle-orm'
 import { CakeFilter, CakeSort, CakeType } from './cake.models'
+import { cakesToFavorites } from './cake-favorite.sql'
 
 export namespace Cake {
     export const getCakeById = async (cakeId: number) => {
@@ -84,12 +85,16 @@ export namespace Cake {
         limit: number
         offset: number
     }) => {
+        console.info('getLeaderboardCakes', limit, offset)
+
         const cakes = await db
             .select()
             .from(cakeTable)
-            .orderBy(sql`wins desc`)
+            .orderBy(sql`wins desc, id asc`)
             .limit(limit)
             .offset(offset)
+
+        console.info(cakes.map(({ id }) => id))
 
         return cakes
     }
@@ -122,6 +127,91 @@ export namespace Cake {
         const cakes = await query
 
         return cakes
+    }
+
+    export const getFavoriteCake = async (address: string, cakeId: number) => {
+        const cakeJoin = await db
+            .select()
+            .from(cakeTable)
+            .innerJoin(
+                cakesToFavorites,
+                and(
+                    eq(cakesToFavorites.address, address),
+                    eq(cakesToFavorites.cakeId, cakeId),
+                ),
+            )
+            .limit(1)
+
+        return cakeJoin[0]?.cakes ?? null
+    }
+
+    export const getFavoriteCakes = async ({
+        address,
+        limit,
+        offset,
+        filter,
+        sort,
+    }: {
+        address: string
+        limit: number
+        offset: number
+        filter: CakeFilter
+        sort: CakeSort
+    }) => {
+        const orderBy =
+            sort === CakeSort.Wins ? sql`wins desc` : sql`created_at desc`
+
+        const query = db
+            .select()
+            .from(cakeTable)
+            .innerJoin(
+                cakesToFavorites,
+                and(
+                    eq(cakesToFavorites.address, address),
+                    eq(cakesToFavorites.cakeId, cakeTable.id),
+                ),
+            )
+            .orderBy(orderBy)
+            .limit(limit)
+            .offset(offset)
+
+        if (filter !== CakeFilter.None) {
+            query.where(eq(cakeTable.type, filter as unknown as CakeType))
+        }
+
+        const cakes = await query
+
+        return cakes.map((cake) => ({
+            ...cake.cakes,
+        }))
+    }
+
+    export const addCakeToFavorites = async (
+        address: string,
+        cakeId: number,
+    ) => {
+        await db.insert(cakesToFavorites).values({
+            address,
+            cakeId,
+        })
+
+        return { success: true }
+    }
+
+    export const removeCakeFromFavorites = async (
+        cakeId: number,
+        address: string,
+    ) => {
+        await db
+            .delete(cakesToFavorites)
+            .where(
+                and(
+                    eq(cakesToFavorites.cakeId, cakeId),
+                    eq(cakesToFavorites.address, address),
+                ),
+            )
+
+        return { success: true }
     }
 
     export const create = async ({
@@ -166,5 +256,14 @@ export namespace Cake {
             .where(eq(cakeTable.id, winnerCakeId))
 
         return { success: true }
+    }
+
+    export const likeCake = async (cakeId: number) => {
+        await db
+            .update(cakeTable)
+            .set({
+                likes: sql`likes + 1`,
+            })
+            .where(eq(cakeTable.id, cakeId))
     }
 }

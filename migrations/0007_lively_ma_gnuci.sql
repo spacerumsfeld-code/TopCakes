@@ -1,0 +1,1 @@
+ALTER TABLE "cakes" ADD COLUMN "is_nft" boolean DEFAULT false NOT NULL;

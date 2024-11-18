@@ -8,6 +8,7 @@ import {
     text,
     pgEnum,
     timestamp,
+    boolean,
 } from 'drizzle-orm/pg-core'
 import { cakesToBattles } from '../battle/cake-battle.sql'
 import { CakeType } from './cake.models'
@@ -35,6 +36,8 @@ export const cakes = pgTable('cakes', {
     createdAt: timestamp('created_at').defaultNow().notNull(),
     lastUpdatedAt: timestamp('last_updated_at').defaultNow().notNull(),
     ownerAddress: varchar('owner_address', { length: 255 }),
+    likes: integer('likes').default(0).notNull(),
+    isNFT: boolean('is_nft').default(false).notNull(),
 })
 
 export const cakeRelations = relations(cakes, ({ many }) => ({

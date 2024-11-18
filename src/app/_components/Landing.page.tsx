@@ -5,7 +5,7 @@ import { BakeOffSkeleton } from './bake-off/BakeOff.skeleton'
 import { LandingHeader } from './LandingHeader'
 import { Showcase } from './Showcase'
 
-export const LandingPage = () => {
+export const LandingPage = async () => {
     return (
         <div className="min-h-screen bg-[#faf7f5]">
             <main>

@@ -9,7 +9,6 @@ const webConfig: NextjsArgs = {
         autostart: true,
         command: 'pnpm run dev',
     },
-    // warm: 1,
 }
 
 if (process.env.PULUMI_NODEJS_STACK === 'production') {

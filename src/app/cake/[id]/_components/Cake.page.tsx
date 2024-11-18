@@ -11,12 +11,13 @@ import {
 } from '@/ui/components/tooltip'
 import { getCakeById } from '../data'
 import { JoinNowCTA } from '@/app/_components/JoinNowCTA'
-import { Trophy, CakeSlice, ChefHat, ThumbsUp, Share2 } from 'lucide-react'
+import { Trophy, CakeSlice, ChefHat, Share2 } from 'lucide-react'
 import { cn, tempLinkAsButtonClassName } from '@/lib'
+import { CakeLike } from './CakeLike'
+import { CakeFavorite } from './CakeFavorite'
 
 export const CakePage = async (props: { params: { id: string } }) => {
     const { cake } = await getCakeById(Number(props.params.id))
-    const isNFT = false
 
     return (
         <div className="min-h-screen">
@@ -38,12 +39,8 @@ export const CakePage = async (props: { params: { id: string } }) => {
                                     className="rounded-lg shadow-lg w-full object-contain bg-white"
                                 />
                                 <div className="absolute top-2 right-2 flex gap-2">
-                                    <Button
-                                        className="bg-white text-[#ef9fbc] hover:bg-[#ef9fbc] hover:text-white hover:scale-105 transition-all"
-                                        aria-label="Like this cake"
-                                    >
-                                        <ThumbsUp className="w-5 h-5" />
-                                    </Button>
+                                    <CakeLike cakeId={cake.id} />
+                                    <CakeFavorite cakeId={cake.id} />
                                     <Button
                                         className="bg-white text-[#65c3c8] hover:bg-[#65c3c8] hover:text-white hover:scale-105 transition-all"
                                         aria-label="Share this cake"
@@ -104,7 +101,7 @@ export const CakePage = async (props: { params: { id: string } }) => {
                                         <span className="font-medium">
                                             Likes:
                                         </span>{' '}
-                                        {cake.wins}
+                                        {cake.likes}
                                     </p>
                                 </CardContent>
                             </Card>
@@ -113,7 +110,9 @@ export const CakePage = async (props: { params: { id: string } }) => {
                                 <CardHeader>
                                     <CardTitle className="flex items-center text-xl font-semibold">
                                         <CakeSlice className="text-[#65c3c8] mr-2" />
-                                        {isNFT ? 'NFT Details' : 'Ownership'}
+                                        {cake.isNFT
+                                            ? 'NFT Details'
+                                            : 'Ownership'}
                                     </CardTitle>
                                 </CardHeader>
                                 <CardContent className="space-y-2">
@@ -129,7 +128,7 @@ export const CakePage = async (props: { params: { id: string } }) => {
                                             {cake?.ownerAddress}
                                         </Link>
                                     </p>
-                                    {isNFT ? (
+                                    {cake.isNFT ? (
                                         <>
                                             <p className="text-sm">
                                                 <span className="font-medium">
@@ -152,8 +151,8 @@ export const CakePage = async (props: { params: { id: string } }) => {
                                         </>
                                     ) : (
                                         <p className="text-sm text-neutral-content">
-                                            This cake is not minted as an NFT
-                                            yet.
+                                            This cake has not been minted as an
+                                            NFT yet.
                                         </p>
                                     )}
                                 </CardContent>

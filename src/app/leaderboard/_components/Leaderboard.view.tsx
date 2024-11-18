@@ -39,11 +39,13 @@ export const LeaderboardView = (props: {
                 const { cakes, nextOffset, hasMore } =
                     await getLeaderboardCakes({
                         limit: props.limit,
-                        offset: localOffset + props.limit,
+                        offset: localOffset,
                     })
                 stopLoading('leaderboardCakes')
 
+                console.info(localCakes.length)
                 setLocalCakes((prev) => [...prev, ...cakes!])
+                console.info(localCakes.length)
                 setLocalOffset(nextOffset)
                 setLocalHasMore(hasMore)
             }

@@ -15,7 +15,7 @@ import {
     CakeFilterReverseMapping,
 } from '@/domain/cake/cake.models'
 
-export const BakeryFilters = (props: {
+export const CakeGridFilters = (props: {
     activeFilter: CakeFilter
     activeSort: CakeSort
 }) => {

@@ -7,11 +7,10 @@ dotenv.config({ path: '.env' })
 const config = defineConfig({
     testDir: './src/app',
     timeout: 30 * 1000,
-    fullyParallel: false,
+    fullyParallel: true,
     forbidOnly: Boolean(process.env.CI),
     retries: process.env.CI ? 1 : 0,
-    // workers: '50%',
-    workers: 1,
+    workers: '50%',
     reporter: process.env.CI ? 'dot' : 'list',
     maxFailures: process.env.CI ? 1 : 0,
     use: {
